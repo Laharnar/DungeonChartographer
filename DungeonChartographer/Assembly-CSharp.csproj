@@ -74,7 +74,6 @@
     <Compile Include="Assets\Scripts\External\Interact\InteractCore.cs" />
     <Compile Include="Assets\Scripts\External\Interact\InteractSetup.cs" />
     <Compile Include="Assets\Scripts\External\Interact\Support\Move.cs" />
-    <Compile Include="Assets\Scripts\External\Interact\InteractCombat.cs" />
     <Compile Include="Assets\Scripts\External\Interact\InteractRuleset.cs" />
     <Compile Include="Assets\Scripts\External\Interact\Fade.cs" />
     <Compile Include="Assets\Scripts\External\Interact\Trav3l\Trav3lFloat.cs" />
