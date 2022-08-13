@@ -61,6 +61,7 @@
     <Compile Include="Assets\Scripts\External\Interact\Support\SoundsLib.cs" />
     <Compile Include="Assets\Scripts\External\Interact\InteractMoveProps.cs" />
     <Compile Include="Assets\Scripts\External\Interact\NodeManager.cs" />
+    <Compile Include="Assets\Scripts\External\Interact\Support\Logs.cs" />
     <Compile Include="Assets\Scripts\External\Interact\Support\Sound.cs" />
     <Compile Include="Assets\Scripts\External\Interact\InteractPrefabs.cs" />
     <Compile Include="Assets\Scripts\External\Interact\Support\InteractUtils.cs" />
@@ -73,13 +74,13 @@
     <Compile Include="Assets\Scripts\External\Interact\InteractCore.cs" />
     <Compile Include="Assets\Scripts\External\Interact\InteractSetup.cs" />
     <Compile Include="Assets\Scripts\External\Interact\Support\Move.cs" />
+    <Compile Include="Assets\Scripts\External\Interact\InteractCombat.cs" />
     <Compile Include="Assets\Scripts\External\Interact\InteractRuleset.cs" />
     <Compile Include="Assets\Scripts\External\Interact\Fade.cs" />
     <Compile Include="Assets\Scripts\External\Interact\Trav3l\Trav3lFloat.cs" />
     <Compile Include="Assets\Scripts\External\Interact\InteractStorage.cs" />
     <Compile Include="Assets\Scripts\External\Interact\InteractState.cs" />
     <Compile Include="Assets\Scripts\External\Interact\InteractLayer.cs" />
-    <Compile Include="Assets\Scripts\External\Interact\Support\Logs.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

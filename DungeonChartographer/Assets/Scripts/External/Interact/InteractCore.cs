@@ -6,17 +6,6 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace Combat
-{
-    public class InteractCombat
-    {
-        // Vse na enem kupu
-        public const string COMBAT_PreAttack = "preHitDamage";
-        public const string COMBAT_ON_DMG_POINT = "hitDamage";
-        public const string COMBAT_ON_DISPLACE = "displace";
-    }
-}
-
 namespace Interact
 {
 
