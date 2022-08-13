@@ -1,0 +1,4 @@
+Dungneon chartographer is small turn based game, where you use tools-like skillset to 
+figure out how to beat enemies, as you map dungeons. 
+Depending on your skills, battles aren't winnable and you flee, 
+making charting more difficult as enemies stay alive. 
