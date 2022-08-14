@@ -14,6 +14,6 @@ namespace Combat
     {
         Vector2Int Slot { get; }
         Transform transform { get; }
-        Transform GameObject { get; }
+        GameObject gameObject { get; }
     }
 }

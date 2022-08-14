@@ -31,7 +31,7 @@ namespace Combat
                 yield return new WaitForSeconds(delay);
                 yield return StartCoroutine(action.Jump(target.Unit.transform.position, target.Unit.transform.position + dir + (Vector3)Random.insideUnitCircle, target, shape));
                 if (destroy)
-                    Destroy(target.Unit.GameObject);
+                    Destroy(target.Unit.gameObject);
             }
         }
 
@@ -56,7 +56,7 @@ namespace Combat
             {
                 action.Jump(target.Unit.transform.position, target.Unit.transform.position + dir + (Vector3)Random.insideUnitCircle * randomSize, target, shape);
                 if (destroy)
-                    Destroy(target.Unit.GameObject, shape.Duration);
+                    Destroy(target.Unit.gameObject, shape.Duration);
             }
         }
     }

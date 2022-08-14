@@ -7,19 +7,23 @@ namespace Combat
     public class RangeMapReadOnly : IEnumerable<Vector2Int>
     {
         protected HashSet<Vector2Int> map;
-        protected bool markFilled = true; // added slots are filled/emptied
+        protected bool fill = true; // added slots are filled/emptied
         protected Vector2Int center; // origin
 
         public RangeMapReadOnly(RangeMapReadOnly other)
         {
             this.map = new HashSet<Vector2Int>(other.map);
-            this.markFilled = other.markFilled;
+            this.fill = other.fill;
             this.center = other.center;
         }
-        public RangeMapReadOnly(bool isFull)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="isFilled">false = whole world is empty, true: whole world is obstacle</param>
+        public RangeMapReadOnly(bool isFilled)
         {
             map = new HashSet<Vector2Int>();
-            if (isFull)
+            if (isFilled)
             {
                 Invert();
             }
@@ -59,12 +63,12 @@ namespace Combat
         }
         public bool IsFilled(Vector2Int slot)
         {
-            return MarkFilled == map.Contains(slot - center);
+            return Filled == map.Contains(slot - center);
         }
 
         public void Invert()
         {
-            markFilled = !markFilled;
+            fill = !fill;
         }
 
         public IEnumerator<Vector2Int> GetEnumerator()
@@ -111,8 +115,8 @@ namespace Combat
         public static RangeMapReadOnly Empty { get { return new RangeMapReadOnly(new Vector2Int[0]); } }
         public static RangeMapReadOnly Single { get { return new RangeMapReadOnly(0); } }
 
-        public bool IsFull { get { return !MarkFilled && map.Count == 0; } }
-        public bool MarkFilled { get { return markFilled; } }
+        public bool IsFull { get { return !Filled && map.Count == 0; } }
+        public bool Filled { get { return fill; } }
         public BoundsInt Bounds
         {
             get
@@ -137,7 +141,7 @@ namespace Combat
     public class RangeMap : RangeMapReadOnly
     {
         public RangeMap(RangeMap other) : base(other) { }
-        public RangeMap(bool isFull = false) : base(isFull) { }
+        public RangeMap(bool isFilled = false) : base(isFilled) { }
         public RangeMap(IEnumerable<Vector2Int> slots) : base(slots) { }
         public RangeMap(IEnumerable<IUnitInfo> units) : base(units) { }
         public RangeMap(int range) : base(range) { }
@@ -149,7 +153,7 @@ namespace Combat
         }
         public bool Remove(Vector2Int slot)
         {
-            if (MarkFilled)
+            if (Filled)
             {
                 return map.Remove(slot - center);
             }
@@ -160,7 +164,7 @@ namespace Combat
         }
         public bool Add(Vector2Int slot)
         {
-            if (MarkFilled)
+            if (Filled)
             {
                 return map.Add(slot - center);
             }
@@ -171,7 +175,7 @@ namespace Combat
         }
         public void Remove(RangeMapReadOnly other)
         {
-            if (other.MarkFilled)
+            if (other.Filled)
             {
                 foreach (var slot in other)
                 {
@@ -180,7 +184,7 @@ namespace Combat
             }
             else
             {
-                if (MarkFilled)
+                if (Filled)
                 {
                     List<Vector2Int> toRemove = new List<Vector2Int>();
                     foreach (var slot in this)
@@ -197,7 +201,7 @@ namespace Combat
                 }
                 else
                 {
-                    this.markFilled = true;
+                    this.fill = true;
                     HashSet<Vector2Int> temp = new HashSet<Vector2Int>(this.map);
                     foreach (var slot in other)
                     {
@@ -212,7 +216,7 @@ namespace Combat
         }
         public void And(RangeMapReadOnly other)
         {
-            if (MarkFilled)
+            if (Filled)
             {
                 List<Vector2Int> toRemove = new List<Vector2Int>();
                 foreach (var slot in this)
@@ -229,7 +233,7 @@ namespace Combat
             }
             else
             {
-                if (!other.MarkFilled)
+                if (!other.Filled)
                 {
                     foreach (var slot in other)
                     {
@@ -238,7 +242,7 @@ namespace Combat
                 }
                 else
                 {
-                    this.markFilled = false;
+                    this.fill = false;
                     HashSet<Vector2Int> temp = new HashSet<Vector2Int>(this.map);
                     foreach (var slot in other)
                     {
@@ -253,7 +257,7 @@ namespace Combat
         }
         public void Or(RangeMapReadOnly other) 
         {
-            if (!MarkFilled)
+            if (!Filled)
             {
                 List<Vector2Int> toAdd = new List<Vector2Int>();
                 foreach (var slot in this)
@@ -270,7 +274,7 @@ namespace Combat
             }
             else
             {
-                if (other.MarkFilled)
+                if (other.Filled)
                 {
                     foreach (var slot in other)
                     {
@@ -279,7 +283,7 @@ namespace Combat
                 }
                 else
                 {
-                    this.markFilled = true;
+                    this.fill = true;
                     HashSet<Vector2Int> temp = new HashSet<Vector2Int>(this.map);
                     foreach (var slot in other)
                     {

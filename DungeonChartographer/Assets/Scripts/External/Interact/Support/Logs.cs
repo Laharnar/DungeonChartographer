@@ -18,6 +18,12 @@ public class Logs
     }
 
     public Dictionary<object, bool> EditorLoggable = new Dictionary<object, bool>();
+
+    internal static void ExistsInspector(Animator animator, UnityEngine.Object obj, string failMsg)
+    {
+        if (animator == null) E($"Not Assigned in inspector: {failMsg}", obj);
+    }
+
     public List<LogInstance> EditorLogs => logs;
     List<LogInstance> logs = new List<LogInstance>();
 

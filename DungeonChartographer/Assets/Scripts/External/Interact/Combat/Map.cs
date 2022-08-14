@@ -27,15 +27,15 @@ namespace Combat
         }
         public static RangeMap FilterCopies(params Predicate<Vector2Int>[] conditions)
         {
-            return FilterCopies<UnityEngine.Object>(new RangeMapReadOnly(true), null, null, conditions);
+            return FilterCopies<UnityEngine.Object>(new RangeMapReadOnly(false), null, null, conditions);
         }
         public static RangeMap FilterCopies(params Func<UnityEngine.Object, Vector2Int, bool>[] conditions)
         {
-            return FilterCopies<UnityEngine.Object>(new RangeMapReadOnly(true), null, conditions, null);
+            return FilterCopies<UnityEngine.Object>(new RangeMapReadOnly(false), null, conditions, null);
         }
         public static RangeMap FilterCopies<T>(T obj, params Func<T, Vector2Int, bool>[] conditions)
         {
-            return FilterCopies<T>(new RangeMapReadOnly(true), obj, conditions, null);
+            return FilterCopies<T>(new RangeMapReadOnly(false), obj, conditions, null);
         }
         public static RangeMap FilterCopies(RangeMapReadOnly map, params Predicate<Vector2Int>[] conditions)
         {

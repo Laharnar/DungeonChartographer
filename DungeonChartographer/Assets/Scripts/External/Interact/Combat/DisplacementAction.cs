@@ -209,7 +209,7 @@ namespace Combat
             running = false;
             onEnd?.Invoke();
             if (destroyObjAfterUse)
-                Destroy(iunit.Unit.GameObject);
+                Destroy(iunit.Unit.gameObject);
             if (destroyAfterUse)
                 Destroy(this);
         }

@@ -8,6 +8,7 @@ namespace Combat
     public static class Pathfinding
     {
         private const uint PATHFINDING_MAX_DEPTH = 1000; // for debug purposes to avoid infinite loop
+        static RangeMapReadOnly pathMap = new RangeMapReadOnly(false);
 
         public static RangeMap Flood(Vector2Int start, int distance, bool ignoreStartObstacles)
         {
@@ -76,7 +77,7 @@ namespace Combat
         }
         public static Path FindPath(Vector2Int startG, Vector2Int endG)
         {
-            return FindPath(startG, endG, new RangeMapReadOnly(true), PATHFINDING_MAX_DEPTH);
+            return FindPath(startG, endG, pathMap, PATHFINDING_MAX_DEPTH);
         }
         /// <summary>
         /// Finds nearest free path to target. If target is unit, find slot next to it.
@@ -164,9 +165,9 @@ namespace Combat
 
             // A* algorithm
             // slot, parent slot, gCost, hCost: fCost = gCost + hCost
-            List<System.Tuple<Vector2Int, Vector2Int, uint, uint>> open = new List<System.Tuple<Vector2Int, Vector2Int, uint, uint>>()
-                { new System.Tuple<Vector2Int, Vector2Int, uint, uint>(startG, startG, 0, SlotDistanceCost(startG, endG)) };
-            List<System.Tuple<Vector2Int, Vector2Int, uint, uint>> closed = new List<System.Tuple<Vector2Int, Vector2Int, uint, uint>>();
+            List<Tuple<Vector2Int, Vector2Int, uint, uint>> open = new List<Tuple<Vector2Int, Vector2Int, uint, uint>>()
+                { new Tuple<Vector2Int, Vector2Int, uint, uint>(startG, startG, 0, SlotDistanceCost(startG, endG)) };
+            List<Tuple<Vector2Int, Vector2Int, uint, uint>> closed = new List<Tuple<Vector2Int, Vector2Int, uint, uint>>();
             while (open.Count > 0)
             {
                 // find outline slot (open list) with minimum fCost
@@ -219,11 +220,12 @@ namespace Combat
                         }
                     }
                     if (inClosed) { continue; }
-                    // filter slots that aren't usable by the algorithm
-                    if (!map.IsFilled(slot))
+                    // filter slots that aren't usable by the algorithm -- disabled, to enable empty infinite maps
+                    /*if (!map.IsFilled(slot))
                     {
+                        Debug.Log($"skip {slot}");
                         continue;
-                    }
+                    }*/
 
                     int openI = -1;
                     for (int i = 0; i < open.Count; i++)
