@@ -56,20 +56,30 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\External\Interact\Camera\Camera23d.cs" />
+    <Compile Include="Assets\Scripts\External\Interact\Combat\Filters.cs" />
+    <Compile Include="Assets\Scripts\External\Interact\Combat\RangeMap.cs" />
+    <Compile Include="Assets\Scripts\External\Interact\Combat\CameraController.cs" />
+    <Compile Include="Assets\Scripts\External\Interact\Camera\CameraDepth.cs" />
     <Compile Include="Assets\Scripts\External\Interact\InteractPickup.cs" />
     <Compile Include="Assets\Scripts\External\Interact\Support\Helps.cs" />
+    <Compile Include="Assets\Scripts\External\Interact\Camera\Object23d.cs" />
     <Compile Include="Assets\Scripts\External\Interact\Support\SoundsLib.cs" />
     <Compile Include="Assets\Scripts\External\Interact\InteractMoveProps.cs" />
     <Compile Include="Assets\Scripts\External\Interact\NodeManager.cs" />
+    <Compile Include="Assets\Scripts\External\Interact\Combat\RunDisplace.cs" />
     <Compile Include="Assets\Scripts\External\Interact\Support\Logs.cs" />
     <Compile Include="Assets\Scripts\External\Interact\Support\Sound.cs" />
+    <Compile Include="Assets\Scripts\External\Interact\Combat\Faction.cs" />
     <Compile Include="Assets\Scripts\External\Interact\InteractPrefabs.cs" />
     <Compile Include="Assets\Scripts\External\Interact\Support\InteractUtils.cs" />
     <Compile Include="Assets\Scripts\External\Interact\InteractModule.cs" />
+    <Compile Include="Assets\Scripts\External\Interact\Combat\DisplacementAction.cs" />
     <Compile Include="Assets\Scripts\External\Interact\InteractBoxPref.cs" />
     <Compile Include="Assets\Scripts\External\Interact\FadeAction.cs" />
     <Compile Include="Assets\Scripts\External\Interact\FadeCurves.cs" />
     <Compile Include="Assets\Scripts\External\Interact\InteractTimed.cs" />
+    <Compile Include="Assets\Scripts\External\Interact\Support\ZOrderController.cs" />
     <Compile Include="Assets\Scripts\External\Interact\Support\Aim.cs" />
     <Compile Include="Assets\Scripts\External\Interact\InteractCore.cs" />
     <Compile Include="Assets\Scripts\External\Interact\InteractSetup.cs" />
@@ -78,8 +88,13 @@
     <Compile Include="Assets\Scripts\External\Interact\Fade.cs" />
     <Compile Include="Assets\Scripts\External\Interact\Trav3l\Trav3lFloat.cs" />
     <Compile Include="Assets\Scripts\External\Interact\InteractStorage.cs" />
+    <Compile Include="Assets\Scripts\External\Interact\Combat\Displacement.cs" />
+    <Compile Include="Assets\Scripts\External\Interact\Combat\IUnitUser.cs" />
     <Compile Include="Assets\Scripts\External\Interact\InteractState.cs" />
     <Compile Include="Assets\Scripts\External\Interact\InteractLayer.cs" />
+    <Compile Include="Assets\Scripts\External\Interact\Combat\Pathfinding.cs" />
+    <Compile Include="Assets\Scripts\External\Interact\Combat\Map.cs" />
+    <Compile Include="Assets\Scripts\External\Interact\Combat\TargetFilter.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
