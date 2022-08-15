@@ -105,7 +105,8 @@ namespace Combat
             for (int i = 0; i < positions.Count; i++)
             {
                 var slot = positions[i];
-                //if (Filters.ObstacleFilter(slot) && !BattleManager.GetUnitAtSlot(slot))
+                //if (Filters.ObstacleFilter(slot) && 
+                if (!BattleManager.I.GetSlot(slot).unit)
                 {
                     stopAt = i - 1;
                     break;
@@ -142,7 +143,7 @@ namespace Combat
             }
             layer++;
             // pre-block at first obstacle in between obj and pos.
-            Logs.L($"Jump: {iunit.Unit} {startPos} -> {endPos} slot:{iunit.Unit.Slot}");
+            Logs.L($"Jump: {iunit.Unit} {startPos} -> {endPos} slot:{iunit.Unit.Pos}");
             endPos = FindEndPos(startPos, endPos);
 
             // maybe unit is already there before jumping on it
@@ -241,7 +242,7 @@ namespace Combat
                 yield break;
 
             var slot = Vector2Int.FloorToInt(self.Unit.transform.position);
-            var offPos = GetClosestFreeSlot(slot, dir);
+            var offPos = Pathfinding.GetClosestFreeSlot(slot, dir);
             var bounce2Pos = offPos;
 
             switch (shape.PushMode)
@@ -256,37 +257,6 @@ namespace Combat
                     Debug.Log("Unhandled");
                     break;
             }
-        }
-
-        internal static Vector2Int GetClosestFreeSlot(Vector2Int slot, Vector2 searchDir)
-        {
-            searchDir = searchDir.normalized;
-            HashSet<Vector2Int> filled = new HashSet<Vector2Int>();
-            Queue<Vector2Int> slots = new Queue<Vector2Int>();
-            slots.Enqueue(slot);
-            for (int i = 0; i < 1000000 && slots.Count > 0; i++)
-            {
-                Vector2Int itemInt = slots.Dequeue();
-                if (!filled.Contains(itemInt))
-                {
-                    /*if (FilledWithAnything(itemInt))
-                    {
-                        filled.Add(itemInt);
-                        Vector3 item = (Vector2)itemInt;
-
-                        slots.Enqueue(new Vector2Int(Mathf.FloorToInt(item.x + searchDir.x), Mathf.FloorToInt(item.y)));
-                        slots.Enqueue(new Vector2Int(Mathf.FloorToInt(item.x), Mathf.FloorToInt(item.y + searchDir.y)));
-                        slots.Enqueue(new Vector2Int(Mathf.FloorToInt(item.x - searchDir.x), Mathf.FloorToInt(item.y)));
-                        slots.Enqueue(new Vector2Int(Mathf.FloorToInt(item.x), Mathf.FloorToInt(item.y - searchDir.y)));
-                    }
-                    else*/
-                    {
-                        return itemInt;
-                    }
-                }
-            }
-            Debug.LogError($"Couldn't a single free slot in range -> {filled.Count}");
-            return slot;
         }
 
     }

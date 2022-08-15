@@ -6,7 +6,7 @@ public class OnPickCombat : MonoBehaviour, IPlayerPicker
     SlotInfo playerPicked;
 
     [SerializeField] string pickMode = "free";
-    ISlotPicker slotPicker => BattleManager.Instance;
+    ISlotPicker slotPicker => BattleManager.I;
     public SkillAttack activeSkill;
     public Unit activeUnit;
 
@@ -44,6 +44,10 @@ public class OnPickCombat : MonoBehaviour, IPlayerPicker
                     {
                         activeUnit.MovePath(slot.slot, AfterMoveOrAfterAttack);
                         pickMode = "moving";
+                    }
+                    else
+                    {
+                        activeUnit = slot.unit;
                     }
                 }
                 else if (pickMode == "attack")

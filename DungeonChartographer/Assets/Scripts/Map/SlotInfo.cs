@@ -15,4 +15,6 @@ public class SlotInfo
         if(units.Count > 0)
             this.unit = units[0];
     }
+
+    public bool IsWalkable { get => units.Count == 0; }
 }

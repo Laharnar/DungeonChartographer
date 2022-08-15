@@ -8,11 +8,11 @@ namespace Combat
     public static class Pathfinding
     {
         private const uint PATHFINDING_MAX_DEPTH = 1000; // for debug purposes to avoid infinite loop
-        static RangeMapReadOnly pathMap = new RangeMapReadOnly(false);
+        static RangeMapReadOnly worldMap => Filters.FreshWorldMap();
 
-        public static RangeMap Flood(Vector2Int start, int distance, bool ignoreStartObstacles)
+        public static RangeMap Flood(Vector2Int start, int distance, bool startOnlyIfFree, bool removeFilledStart)
         {
-            //if (!ignoreStartObstacles && !BattleManager.GetSlotInfo(start).IsWalkable) { return RangeMap.Empty; }
+            if (!startOnlyIfFree && !BattleManager.I.GetSlot(start).IsWalkable) { return RangeMap.Empty; }
 
             RangeMap floodMap = new RangeMap();
             floodMap.Add(start);
@@ -21,8 +21,11 @@ namespace Combat
             HashSet<Vector2Int> newLastAdded = new HashSet<Vector2Int>();
 
             Flood(distance, floodMap, lastAdded, newLastAdded);
+            if (removeFilledStart && BattleManager.I.GetSlot(start).unit != null)
+                floodMap.Remove(start);
             return floodMap;
         }
+
         private static void Flood(int distance, RangeMap map, HashSet<Vector2Int> lastAdded1, HashSet<Vector2Int> lastAdded2)
         {
             if (distance <= 0) { return; }
@@ -30,34 +33,64 @@ namespace Combat
             HashSet<Vector2Int> lastAdded = (lastAdded1.Count == 0) ? lastAdded2 : lastAdded1;    // slots added in previous iteration
             HashSet<Vector2Int> newLastAdded = (lastAdded1.Count == 0) ? lastAdded1 : lastAdded2; // empty at this point
 
-            throw new Exception("invlid impl, add get slot info to map");
             // flood all border tiles (saved in lastAdded)
-            /* foreach (var slot in lastAdded)
+            foreach (var slot in lastAdded)
             {
                 Vector2Int temp = slot + new Vector2Int(1, 0);
-                if (map.GetSlotInfo(temp).IsWalkable && map.Add(temp))
+                if (BattleManager.I.GetSlot(temp).IsWalkable && map.Add(temp))
                 {
                     newLastAdded.Add(temp);
                 }
                 temp = slot + new Vector2Int(-1, 0);
-                if (map.GetSlotInfo(temp).IsWalkable && map.Add(temp))
+                if (BattleManager.I.GetSlot(temp).IsWalkable && map.Add(temp))
                 {
                     newLastAdded.Add(temp);
                 }
                 temp = slot + new Vector2Int(0, 1);
-                if (map.GetSlotInfo(temp).IsWalkable && map.Add(temp))
+                if (BattleManager.I.GetSlot(temp).IsWalkable && map.Add(temp))
                 {
                     newLastAdded.Add(temp);
                 }
                 temp = slot + new Vector2Int(0, -1);
-                if (map.GetSlotInfo(temp).IsWalkable && map.Add(temp))
+                if (BattleManager.I.GetSlot(temp).IsWalkable && map.Add(temp))
                 {
                     newLastAdded.Add(temp);
                 }
-            }*/
+            }
 
             lastAdded.Clear();
             Flood(distance - 1, map, lastAdded1, lastAdded2);
+        }
+
+        public static Vector2Int GetClosestFreeSlot(Vector2Int slot, Vector2 searchDir)
+        {
+            searchDir = searchDir.normalized;
+            HashSet<Vector2Int> filled = new HashSet<Vector2Int>();
+            Queue<Vector2Int> slots = new Queue<Vector2Int>();
+            slots.Enqueue(slot);
+            for (int i = 0; i < 1000000 && slots.Count > 0; i++)
+            {
+                Vector2Int itemInt = slots.Dequeue();
+                if (!filled.Contains(itemInt))
+                {
+                    if (BattleManager.I.GetSlot(itemInt).IsWalkable)
+                    {
+                        filled.Add(itemInt);
+                        Vector3 item = (Vector2)itemInt;
+
+                        slots.Enqueue(new Vector2Int(Mathf.FloorToInt(item.x + searchDir.x), Mathf.FloorToInt(item.y)));
+                        slots.Enqueue(new Vector2Int(Mathf.FloorToInt(item.x), Mathf.FloorToInt(item.y + searchDir.y)));
+                        slots.Enqueue(new Vector2Int(Mathf.FloorToInt(item.x - searchDir.x), Mathf.FloorToInt(item.y)));
+                        slots.Enqueue(new Vector2Int(Mathf.FloorToInt(item.x), Mathf.FloorToInt(item.y - searchDir.y)));
+                    }
+                    else
+                    {
+                        return itemInt;
+                    }
+                }
+            }
+            Debug.LogError($"Couldn't a single free slot in range -> {filled.Count}");
+            return slot;
         }
 
         /// <summary>
@@ -68,16 +101,16 @@ namespace Combat
         /// <returns></returns>
         public static Path FindPath(IUnitInfo unit, IUnitInfo target)
         {
-            return FindPath(unit.Slot, target);
+            return FindPath(unit.Pos, target);
         }
         public static Path FindPath(Vector2Int startG, IUnitInfo target)
         {
             if (target == null) { return Path.Invalid; }
-            return FindPath(startG, target.Slot);
+            return FindPath(startG, target.Pos);
         }
         public static Path FindPath(Vector2Int startG, Vector2Int endG)
         {
-            return FindPath(startG, endG, pathMap, PATHFINDING_MAX_DEPTH);
+            return FindPath(startG, endG, worldMap, PATHFINDING_MAX_DEPTH);
         }
         /// <summary>
         /// Finds nearest free path to target. If target is unit, find slot next to it.
@@ -89,7 +122,7 @@ namespace Combat
         {
             Vector2Int[] targets;
             // search for paths to 4 slots around endG
-            /*if (BattleManager.GetSlotInfo(endG).Unit != null)
+            if (BattleManager.I.GetSlot(endG).unit != null)
             {
                 targets = new Vector2Int[4]
                 {
@@ -99,18 +132,15 @@ namespace Combat
                     endG + Vector2Int.down
                 };
             }
-            else*/
+            else
             {
                 targets = new Vector2Int[1] { endG };
             }
 
-            map = ConditionedMap(map, Path.Levels.UnitsObstacles);
             Path[] paths = new Path[targets.Length];
             for (int i = 0; i < targets.Length; i++)
             {
                 Path path = Path.Invalid;
-                /*Path path = FindPath(startG, targets[i], Path.Levels.NoConditions);
-                Path pathObstacles = FindPath(startG, targets[i], Path.Levels.Obstacles);*/
                 Path pathObstaclesUnits = FindPath(map, startG, targets[i], Path.Levels.UnitsObstacles, maxMoveRange);
                 if (pathObstaclesUnits.IsValidPath) { 
                     path = pathObstaclesUnits;
@@ -121,11 +151,6 @@ namespace Combat
             return shortestPath;
         }
 
-        private static RangeMap ConditionedMap(RangeMapReadOnly map, Path.Levels unitsObstacles)
-        {
-            List<Predicate<Vector2Int>> conditions = ApplyConditions(unitsObstacles);
-            return Map.FilterCopies(map, conditions.ToArray());
-        }
         private static Path ShortestPath(Path[] paths)
         {
             // return shortest path
@@ -154,7 +179,7 @@ namespace Combat
         {
             return FindPath(map, startG, endG, createdPathType, PATHFINDING_MAX_DEPTH);
         }
-        private static Path FindPath(RangeMapReadOnly map, Vector2Int startG, Vector2Int endG, Path.Levels createdPathType, uint maxDepth)
+        private static Path FindPath(RangeMapReadOnly obstructionsMap, Vector2Int startG, Vector2Int endG, Path.Levels createdPathType, uint maxDepth)
         {
             if (startG == endG)
             {
@@ -221,11 +246,10 @@ namespace Combat
                     }
                     if (inClosed) { continue; }
                     // filter slots that aren't usable by the algorithm -- disabled, to enable empty infinite maps
-                    /*if (!map.IsFilled(slot))
+                    if (obstructionsMap.IsFilled(slot))
                     {
-                        Debug.Log($"skip {slot}");
                         continue;
-                    }*/
+                    }
 
                     int openI = -1;
                     for (int i = 0; i < open.Count; i++)

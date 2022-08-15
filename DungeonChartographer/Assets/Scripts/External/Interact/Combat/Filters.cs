@@ -10,7 +10,11 @@ namespace Combat
     /// <seealso cref="Filters"/>
     public static partial class Filters
     {
-        static RangeMap fullMap = new RangeMap(true);
+        static RangeMap fullMap => FreshWorldMap();
+
+        public static RangeMap FreshWorldMap() {
+            return BattleManager.I.GetMap((slot) => !slot.IsWalkable);
+        }
 
         /// <summary>
         /// Filters slots that are not reachable by path of length

@@ -12,7 +12,7 @@ namespace Combat
 
     public interface IUnitInfo
     {
-        Vector2Int Slot { get; }
+        Vector2Int Pos { get; }
         Transform transform { get; }
         GameObject gameObject { get; }
     }

@@ -6,11 +6,13 @@ using UnityEngine;
 
 public class Unit : MonoBehaviour, IUnitReliant, IUnitInfo
 {
-    public Vector2Int Slot { get => Vector2Int.FloorToInt(transform.position); }
+    public Vector2Int Pos { get => Vector2Int.FloorToInt(transform.position); }
     IUnitInfo IUnitReliant.Unit { get => this; }
 
     public float moveSpeed = 10f;
     Animator animator;
+    public Transform visuals;
+    Vector2 target;
 
     static Vector3 offset = Vector2.one / 2f;
 
@@ -19,6 +21,7 @@ public class Unit : MonoBehaviour, IUnitReliant, IUnitInfo
     private void Awake()
     {
         Logs.ExistsInspector(animator, this, "no animator");
+        if (visuals == null) visuals = transform;
         units.Add(this);
     }
 
@@ -30,6 +33,8 @@ public class Unit : MonoBehaviour, IUnitReliant, IUnitInfo
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireCube(transform.position, Vector3.one/2);
+        if(visuals)
+            Gizmos.DrawLine(visuals.position, target);
         Gizmos.DrawWireCube(Vector3Int.FloorToInt(transform.position) + Vector3.one/2f, Vector3.one);
     }
 
@@ -38,49 +43,70 @@ public class Unit : MonoBehaviour, IUnitReliant, IUnitInfo
         List<Unit> foundUnits = new List<Unit>();
         foreach (var item in units)
         {
-            if (item.Slot == pos)
+            if (item.Pos == pos)
                 foundUnits.Add(item);
         }
         return foundUnits;
     }
 
-    public void MovePath(Vector2Int pos, Action onEnd)
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="pos"></param>
+    /// <param name="onEnd"></param>
+    /// <param name="preMove">Jumps to end and moves only visuals</param>
+    public void MovePath(Vector2Int pos, Action onEnd, bool preMove = false)
     {
-        StartCoroutine(MovePathCoro(pos, onEnd));
+        StartCoroutine(MovePathCoro(pos, onEnd, preMove));
     }
 
-    public void Move(Vector2Int pos, Action onEnd)
+    public void Move(Vector2Int pos, Action onEnd, bool preMove = false)
     {
-        StartCoroutine(MoveCoro((Vector3Int)pos, onEnd, true));
+        StartCoroutine(MoveCoro(transform, (Vector3Int)pos, onEnd, true, preMove));
     }
 
-    public IEnumerator MovePathCoro(Vector2Int pos, Action onEnd)
+    public IEnumerator MovePathCoro(Vector2Int pos, Action onEnd, bool preMove = false)
     {
-        Path path = Pathfinding.FindPath(Slot, pos);
+        Path path = Pathfinding.FindPath(Pos, pos);
         Debug.Log($"Move path: {name} -> {pos} | path:{path.StepCount} ");
+        Transform obj = transform;
+        if (preMove && visuals != obj)
+        {
+            var current = transform.position;
+            transform.position = (Vector3Int)path.Last + offset;
+            obj = visuals;
+            obj.position = current;
+        }
         while (path.StepCount > 0)
         {
-            yield return MoveCoro((Vector2)path.First, null, path.StepCount == 1);
+            yield return MoveCoro(obj, (Vector2)path.First, onEnd:null, last:path.StepCount == 1, preMove:false);
             path.RemoveFirst();
         }
         onEnd?.Invoke();
     }
 
-    public IEnumerator MoveCoro(Vector3 pos, Action onEnd, bool last = true)
+    public IEnumerator MoveCoro(Transform obj, Vector3 pos, Action onEnd, bool last = true, bool preMove = false)
     {
         pos += offset;
         PlayBoolAnimation("move", true);
-        
-        var dir = pos - transform.position;
+        if (preMove)
+        {
+            var current = transform.position;
+            transform.position = pos + offset;
+            obj.position = current;
+        }
+        var dir = pos - obj.position;
         var magnitude = dir.magnitude;
         while (magnitude > 0.2f)
         {
-            dir = pos - transform.position;
+            dir = pos - obj.position;
             magnitude = dir.magnitude;
-            transform.Translate(dir / magnitude * moveSpeed * Time.deltaTime);
+            obj.Translate(dir / magnitude * moveSpeed * Time.deltaTime);
+            target = obj.position;
             yield return null;
         }
-        transform.position = pos;
+        obj.position = pos;
+        target = obj.position;
         onEnd?.Invoke();
         if (last)
             PlayBoolAnimation("move", false);

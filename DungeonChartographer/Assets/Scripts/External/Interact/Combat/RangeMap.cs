@@ -1,9 +1,8 @@
-﻿using System.Collections;
+﻿using Combat;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Combat
-{
     public class RangeMapReadOnly : IEnumerable<Vector2Int>
     {
         protected HashSet<Vector2Int> map;
@@ -37,7 +36,7 @@ namespace Combat
             map = new HashSet<Vector2Int>();
             foreach (var item in units)
             {
-                map.Add(item.Slot);
+                map.Add(item.Pos);
             }
         }
         public RangeMapReadOnly(int range) : this(range, (slot) => true) { }
@@ -324,4 +323,3 @@ namespace Combat
         public new static RangeMap Empty { get { return new RangeMap(new Vector2Int[0]); } }
         public new static RangeMap Single { get { return new RangeMap(0); } }
     }
-}

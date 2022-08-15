@@ -61,6 +61,7 @@
     <Compile Include="Assets\Scripts\External\Interact\Combat\Filters.cs" />
     <Compile Include="Assets\Scripts\External\Interact\Combat\RangeMap.cs" />
     <Compile Include="Assets\Scripts\External\Interact\Combat\CameraController.cs" />
+    <Compile Include="Assets\Scripts\Map\SelfCorrection.cs" />
     <Compile Include="Assets\Scripts\External\Interact\Camera\CameraDepth.cs" />
     <Compile Include="Assets\Scripts\External\Interact\InteractPickup.cs" />
     <Compile Include="Assets\Scripts\External\Interact\Support\Helps.cs" />
@@ -69,6 +70,7 @@
     <Compile Include="Assets\Scripts\External\Interact\InteractMoveProps.cs" />
     <Compile Include="Assets\Scripts\External\Interact\NodeManager.cs" />
     <Compile Include="Assets\Scripts\External\Interact\Combat\RunDisplace.cs" />
+    <Compile Include="Assets\Scripts\Map\Init.cs" />
     <Compile Include="Assets\Scripts\External\Interact\Support\Logs.cs" />
     <Compile Include="Assets\Scripts\External\Interact\Support\Sound.cs" />
     <Compile Include="Assets\Scripts\External\Interact\Combat\Faction.cs" />
