@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BattleManager: ISlotPicker
+public class BattleManager: MonoBehaviour, ISlotPicker
 {
     public static BattleManager I = new BattleManager();
 

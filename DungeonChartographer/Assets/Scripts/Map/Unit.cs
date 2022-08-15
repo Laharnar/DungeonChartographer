@@ -8,26 +8,36 @@ public class Unit : MonoBehaviour, IUnitReliant, IUnitInfo
 {
     public Vector2Int Pos { get => Vector2Int.FloorToInt(transform.position); }
     IUnitInfo IUnitReliant.Unit { get => this; }
+    static Vector3 offset = Vector2.one / 2f;
 
-    public float moveSpeed = 10f;
+    [SerializeField] float moveSpeed = 10f;
+    public int alliance;
     Animator animator;
     public Transform visuals;
     Vector2 target;
 
-    static Vector3 offset = Vector2.one / 2f;
+    public static int playerAlliance = 0;
 
     public static List<Unit> units = new List<Unit>();
+    [SerializeField] int moveAmount = 3;
+    public int movesLeft { get; private set; }
 
     private void Awake()
     {
         Logs.ExistsInspector(animator, this, "no animator");
         if (visuals == null) visuals = transform;
         units.Add(this);
+        ResetTurn();
     }
 
     private void OnDestroy()
     {
         units.Remove(this);
+    }
+
+    internal void LockTurn()
+    {
+        movesLeft = 0;
     }
 
     private void OnDrawGizmos()
@@ -36,6 +46,11 @@ public class Unit : MonoBehaviour, IUnitReliant, IUnitInfo
         if(visuals)
             Gizmos.DrawLine(visuals.position, target);
         Gizmos.DrawWireCube(Vector3Int.FloorToInt(transform.position) + Vector3.one/2f, Vector3.one);
+    }
+
+    public void ResetTurn()
+    {
+        movesLeft = moveAmount;
     }
 
     public static List<Unit> GetUnits(Vector2Int pos)
@@ -65,9 +80,10 @@ public class Unit : MonoBehaviour, IUnitReliant, IUnitInfo
         StartCoroutine(MoveCoro(transform, (Vector3Int)pos, onEnd, true, preMove));
     }
 
-    public IEnumerator MovePathCoro(Vector2Int pos, Action onEnd, bool preMove = false)
+    public IEnumerator MovePathCoro(Vector2Int pos, Action onEnd, bool preMove = false, bool energy = true)
     {
         Path path = Pathfinding.FindPath(Pos, pos);
+        if(energy) path.CutToRange(movesLeft);
         Debug.Log($"Move path: {name} -> {pos} | path:{path.StepCount} ");
         Transform obj = transform;
         if (preMove && visuals != obj)
@@ -77,6 +93,7 @@ public class Unit : MonoBehaviour, IUnitReliant, IUnitInfo
             obj = visuals;
             obj.position = current;
         }
+        if(energy) movesLeft -= path.StepCount;
         while (path.StepCount > 0)
         {
             yield return MoveCoro(obj, (Vector2)path.First, onEnd:null, last:path.StepCount == 1, preMove:false);
@@ -89,6 +106,8 @@ public class Unit : MonoBehaviour, IUnitReliant, IUnitInfo
     {
         pos += offset;
         PlayBoolAnimation("move", true);
+        
+        var mdir = Vector2Int.FloorToInt(pos) - Vector2Int.FloorToInt(obj.position);
         if (preMove)
         {
             var current = transform.position;

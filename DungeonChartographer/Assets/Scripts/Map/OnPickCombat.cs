@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.Assertions;
 
 public class OnPickCombat : MonoBehaviour, IPlayerPicker
@@ -9,6 +10,12 @@ public class OnPickCombat : MonoBehaviour, IPlayerPicker
     ISlotPicker slotPicker => BattleManager.I;
     public SkillAttack activeSkill;
     public Unit activeUnit;
+    CombatFlow combatFlow;
+
+    private void Awake()
+    {
+        Init.GetComponentIfNull(this, ref combatFlow);
+    }
 
     void AfterMoveOrAfterAttack()
     {
@@ -42,8 +49,18 @@ public class OnPickCombat : MonoBehaviour, IPlayerPicker
                 {
                     if (slot.unit == null)
                     {
-                        activeUnit.MovePath(slot.slot, AfterMoveOrAfterAttack);
-                        pickMode = "moving";
+                        if (activeUnit.alliance == Unit.playerAlliance)
+                        {
+                            if (activeUnit.movesLeft > 0)
+                            {
+                                activeUnit.MovePath(slot.slot, AfterMoveOrAfterAttack);
+                                pickMode = "moving";
+                            }
+                        }
+                        else
+                        {
+                            Deselect();
+                        }
                     }
                     else
                     {
@@ -58,10 +75,7 @@ public class OnPickCombat : MonoBehaviour, IPlayerPicker
             }
             else if (sid == "right")
             {
-                var slot = slotPicker.GetSlot(picker.rightSelected);
-                playerPicked = null;
-                activeUnit = null;
-                pickMode = "free";
+                Deselect();
             }
         }
         else
@@ -73,5 +87,12 @@ public class OnPickCombat : MonoBehaviour, IPlayerPicker
                 pickMode = "attack";
             }
         }
+    }
+
+    private void Deselect()
+    {
+        playerPicked = null;
+        activeUnit = null;
+        pickMode = "free";
     }
 }

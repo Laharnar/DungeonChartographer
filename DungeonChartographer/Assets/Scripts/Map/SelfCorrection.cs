@@ -14,7 +14,7 @@ public class SelfCorrection : MonoBehaviour
         {
             this.GetComponentIfNull(ref unit);
             Vector2Int pos = Pathfinding.GetClosestFreeSlot(unit.Pos, Random.onUnitSphere);
-            yield return unit.MovePathCoro(pos, null, preMove: true);
+            yield return unit.MovePathCoro(pos, null, preMove: true, energy:false);
         }
         if (destroyOnUse)
             Destroy(this);

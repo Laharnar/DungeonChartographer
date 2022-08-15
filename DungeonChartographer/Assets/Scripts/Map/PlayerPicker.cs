@@ -33,12 +33,14 @@ public class PlayerPicker : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Mouse0))
             {
                 leftSelected = selected;
-                route.OnPickerPicks("left", this);
+                if (CombatFlow.IsPlayerTurn())
+                    route.OnPickerPicks("left", this);
             }
             else
             {
                 rightSelected = selected;
-                route.OnPickerPicks("right", this);
+                if (CombatFlow.IsPlayerTurn()) 
+                    route.OnPickerPicks("right", this);
             }
         }
     }
