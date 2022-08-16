@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class PlayerPicker : MonoBehaviour
 {
@@ -29,6 +30,8 @@ public class PlayerPicker : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Mouse0) || Input.GetKeyDown(KeyCode.Mouse1))
         {
+            if (EventSystem.current.IsPointerOverGameObject())
+                return;
             selected = Vector2Int.FloorToInt(mouse);
             if (Input.GetKeyDown(KeyCode.Mouse0))
             {

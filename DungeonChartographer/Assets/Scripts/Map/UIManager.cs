@@ -9,7 +9,7 @@ public static class UIManager
         display.Add(uiKey, ui);
     }
 
-    internal static IDisplayUI GetUIPostAwake(string key)
+    internal static IDisplayUI GetUI(string key)
     {
         return display[key];
     }

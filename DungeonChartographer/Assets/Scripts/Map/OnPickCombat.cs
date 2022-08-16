@@ -9,7 +9,7 @@ public class OnPickCombat : MonoBehaviour, IPlayerPicker
     [SerializeField] string pickMode = "free";
     ISlotPicker slotPicker => BattleManager.I;
     public SkillAttack activeSkill;
-    public Unit activeUnit;
+    [SerializeField] Unit activeUnit;
     CombatFlow combatFlow;
 
     private void Awake()
@@ -22,6 +22,11 @@ public class OnPickCombat : MonoBehaviour, IPlayerPicker
         if (pickMode == "moving" || pickMode == "attacking")
             pickMode = "unit";
         else Debug.LogError($"Invalid mode {pickMode}");
+    }
+
+    internal void StartTurn()
+    {
+        Deselect();
     }
 
     /// <summary>
@@ -64,13 +69,22 @@ public class OnPickCombat : MonoBehaviour, IPlayerPicker
                     }
                     else
                     {
-                        activeUnit = slot.unit;
+                        if (slot.unit.alliance == Unit.playerAlliance)
+                        {
+                            Deselect();
+                            pickMode = "unit";
+                            activeUnit = slot.unit;
+                        }
+                        else if (activeUnit.energyLeft > 0)
+                        {
+                            pickMode = "attack";
+                        }
                     }
                 }
                 else if (pickMode == "attack")
                 {
-                    activeUnit.Attack((Vector3Int)slot.slot, activeSkill, AfterMoveOrAfterAttack);
                     pickMode = "attacking";
+                    activeUnit.Attack((Vector3Int)slot.slot, activeSkill, AfterMoveOrAfterAttack);
                 }
             }
             else if (sid == "right")

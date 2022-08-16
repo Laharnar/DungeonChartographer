@@ -30,16 +30,7 @@ public class UIShowTurn : MonoBehaviour, IDisplayUI
         displayText = "Enemy turn";
     }
 
-    public void ShowText(string text)
-    {
-        if (text == "%ShowPlayerTurn")
-            ShowPlayerTurn();
-        else if (text == "%ShowEnemyTurn")
-            ShowEnemyTurn();
-        else displayText = text;
-    }
-
-    public void Show(object data)
+    public void Run(object data)
     {
         Debug.Log("Show turn");
         if ((string)data == "%PlayerTurn")

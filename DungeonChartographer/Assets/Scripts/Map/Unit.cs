@@ -20,6 +20,8 @@ public class Unit : MonoBehaviour, IUnitReliant, IUnitInfo
 
     public static List<Unit> units = new List<Unit>();
     [SerializeField] int moveAmount = 3;
+    [SerializeField] int energyAmount = 2;
+    public int energyLeft { get; private set; }
     public int movesLeft { get; private set; }
 
     private void Awake()
@@ -35,9 +37,16 @@ public class Unit : MonoBehaviour, IUnitReliant, IUnitInfo
         units.Remove(this);
     }
 
-    internal void LockTurn()
+    public void LockTurn()
     {
         movesLeft = 0;
+        energyLeft = 0;
+    }
+
+    public void ResetTurn()
+    {
+        movesLeft = moveAmount;
+        energyLeft = energyAmount;
     }
 
     private void OnDrawGizmos()
@@ -46,11 +55,6 @@ public class Unit : MonoBehaviour, IUnitReliant, IUnitInfo
         if(visuals)
             Gizmos.DrawLine(visuals.position, target);
         Gizmos.DrawWireCube(Vector3Int.FloorToInt(transform.position) + Vector3.one/2f, Vector3.one);
-    }
-
-    public void ResetTurn()
-    {
-        movesLeft = moveAmount;
     }
 
     public static List<Unit> GetUnits(Vector2Int pos)
@@ -140,5 +144,7 @@ public class Unit : MonoBehaviour, IUnitReliant, IUnitInfo
     internal void Attack(Vector3Int slot, SkillAttack skillAttack, Action onEnd)
     {
         Debug.Log("impl attack");
+        energyLeft -= 1;
+        onEnd();
     }
 }

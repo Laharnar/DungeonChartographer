@@ -84,11 +84,15 @@
     <Compile Include="Assets\Scripts\External\Interact\FadeCurves.cs" />
     <Compile Include="Assets\Scripts\External\Interact\InteractTimed.cs" />
     <Compile Include="Assets\Scripts\External\Interact\Combat\TargetFilter.cs" />
+    <Compile Include="Assets\Scripts\Map\IDisplayUI.cs" />
+    <Compile Include="Assets\Scripts\Map\UIManager.cs" />
+    <Compile Include="Assets\Scripts\Map\UIShowTurn.cs" />
     <Compile Include="Assets\Scripts\External\Interact\Support\ZOrderController.cs" />
     <Compile Include="Assets\Scripts\External\Interact\Support\Aim.cs" />
     <Compile Include="Assets\Scripts\Map\SkillAttack.cs" />
     <Compile Include="Assets\Scripts\External\Interact\InteractCore.cs" />
     <Compile Include="Assets\Scripts\External\Interact\InteractSetup.cs" />
+    <Compile Include="Assets\Scripts\Map\CombatFlow.cs" />
     <Compile Include="Assets\Scripts\External\Interact\Support\Move.cs" />
     <Compile Include="Assets\Scripts\Map\Unit.cs" />
     <Compile Include="Assets\Scripts\External\Interact\InteractRuleset.cs" />
@@ -105,10 +109,7 @@
     <Compile Include="Assets\Scripts\External\Interact\InteractLayer.cs" />
     <Compile Include="Assets\Scripts\External\Interact\Combat\Pathfinding.cs" />
     <Compile Include="Assets\Scripts\External\Interact\Combat\Map.cs" />
-    <Compile Include="Assets\Scripts\Map\CombatFlow.cs" />
-    <Compile Include="Assets\Scripts\Map\UIShowTurn.cs" />
-    <Compile Include="Assets\Scripts\Map\UIManager.cs" />
-    <Compile Include="Assets\Scripts\Map\IDisplayUI.cs" />
+    <Compile Include="Assets\Scripts\Map\UITrigger.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
