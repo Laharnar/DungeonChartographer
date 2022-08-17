@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 
 public static class UIManager
 {
@@ -6,7 +7,9 @@ public static class UIManager
 
     internal static void RegisterUI(this IDisplayUI ui, string uiKey)
     {
-        display.Add(uiKey, ui);
+        if (display.ContainsKey(uiKey))
+            display[uiKey] = ui;
+        else display.Add(uiKey, ui);
     }
 
     internal static IDisplayUI GetUI(string key)

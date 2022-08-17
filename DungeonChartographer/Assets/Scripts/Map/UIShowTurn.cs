@@ -1,14 +1,13 @@
 using System;
-using System.Collections;
 using UnityEngine;
 
-public class UIShowTurn : MonoBehaviour, IDisplayUI
+public class UIShowTurn : LiveBehaviour, IDisplayUI
 {
     TMPro.TextMeshProUGUI text;
     public string uiKey = "show turn";
     public string displayText;
-
-    private void Awake()
+    string ash;
+    protected override void LiveAwake()
     {
         Init.GetComponentIfNull(this, ref text);
         this.RegisterUI(uiKey);

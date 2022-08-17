@@ -111,6 +111,7 @@
     <Compile Include="Assets\Scripts\External\Interact\InteractLayer.cs" />
     <Compile Include="Assets\Scripts\External\Interact\Combat\Pathfinding.cs" />
     <Compile Include="Assets\Scripts\External\Interact\Combat\Map.cs" />
+    <Compile Include="Assets\Scripts\Map\LiveBehaviour.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class CombatFlow:MonoBehaviour, IDisplayUI
+public class CombatFlow:LiveBehaviour, IDisplayUI
 {
     [SerializeField] int turnOwner;
     static CombatFlow i;
@@ -11,13 +11,14 @@ public class CombatFlow:MonoBehaviour, IDisplayUI
     public bool forceEnd = false;
     OnPickCombat picker;
 
-    private void Awake()
+    protected override void LiveAwake()
     {
         Init.GetComponentIfNull(this, ref picker);
         UIManager.RegisterUI(this, endTurnUiKey);
         if (i == null)
             i = this;
     }
+
 
     public void UIForceEnd()
     {
@@ -46,7 +47,6 @@ public class CombatFlow:MonoBehaviour, IDisplayUI
 
     public IEnumerator NextTurn()
     {
-        Debug.Log("next turn");
         // end turn
         foreach (var item in Unit.units)
         {
