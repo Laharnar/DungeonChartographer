@@ -1,11 +1,11 @@
-﻿using Combat;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class BattleManager: MonoBehaviour, ISlotPicker
 {
-    public static BattleManager I = new BattleManager();
+    static BattleManager i;
+    public static BattleManager I => Init.AutoSingleton(ref i);
 
     public RangeMap GetMap(Func<SlotInfo, bool> predicate)
     {

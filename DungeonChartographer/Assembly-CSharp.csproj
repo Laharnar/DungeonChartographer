@@ -61,6 +61,7 @@
     <Compile Include="Assets\Scripts\External\Interact\Combat\Filters.cs" />
     <Compile Include="Assets\Scripts\External\Interact\Combat\RangeMap.cs" />
     <Compile Include="Assets\Scripts\External\Interact\Combat\CameraController.cs" />
+    <Compile Include="Assets\Scripts\Map\UITrigger.cs" />
     <Compile Include="Assets\Scripts\Map\SelfCorrection.cs" />
     <Compile Include="Assets\Scripts\External\Interact\Camera\CameraDepth.cs" />
     <Compile Include="Assets\Scripts\External\Interact\InteractPickup.cs" />
@@ -101,6 +102,7 @@
     <Compile Include="Assets\Scripts\External\Interact\Fade.cs" />
     <Compile Include="Assets\Scripts\External\Interact\Trav3l\Trav3lFloat.cs" />
     <Compile Include="Assets\Scripts\External\Interact\InteractStorage.cs" />
+    <Compile Include="Assets\Scripts\Map\Ai.cs" />
     <Compile Include="Assets\Scripts\External\Interact\Combat\Displacement.cs" />
     <Compile Include="Assets\Scripts\Map\BattleManager.cs" />
     <Compile Include="Assets\Scripts\External\Interact\Combat\IUnitUser.cs" />
@@ -109,7 +111,6 @@
     <Compile Include="Assets\Scripts\External\Interact\InteractLayer.cs" />
     <Compile Include="Assets\Scripts\External\Interact\Combat\Pathfinding.cs" />
     <Compile Include="Assets\Scripts\External\Interact\Combat\Map.cs" />
-    <Compile Include="Assets\Scripts\Map\UITrigger.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

@@ -21,15 +21,18 @@ public class Unit : MonoBehaviour, IUnitReliant, IUnitInfo
     public static List<Unit> units = new List<Unit>();
     [SerializeField] int moveAmount = 3;
     [SerializeField] int energyAmount = 2;
+    public Ai ai;
+
     public int energyLeft { get; private set; }
     public int movesLeft { get; private set; }
 
     private void Awake()
     {
+        this.GetComponentIfNull(ref ai);
         Logs.ExistsInspector(animator, this, "no animator");
         if (visuals == null) visuals = transform;
         units.Add(this);
-        ResetTurn();
+        StartTurn();
     }
 
     private void OnDestroy()
@@ -37,13 +40,13 @@ public class Unit : MonoBehaviour, IUnitReliant, IUnitInfo
         units.Remove(this);
     }
 
-    public void LockTurn()
+    public void SkipTurn()
     {
         movesLeft = 0;
         energyLeft = 0;
     }
 
-    public void ResetTurn()
+    public void StartTurn()
     {
         movesLeft = moveAmount;
         energyLeft = energyAmount;
@@ -68,13 +71,24 @@ public class Unit : MonoBehaviour, IUnitReliant, IUnitInfo
         return foundUnits;
     }
 
+    public static List<Unit> GetUnits(Func<Unit, bool> filter)
+    {
+        List<Unit> foundUnits = new List<Unit>();
+        foreach (var item in units)
+        {
+            if (filter(item))
+                foundUnits.Add(item);
+        }
+        return foundUnits;
+    }
+
     /// <summary>
     /// 
     /// </summary>
     /// <param name="pos"></param>
     /// <param name="onEnd"></param>
     /// <param name="preMove">Jumps to end and moves only visuals</param>
-    public void MovePath(Vector2Int pos, Action onEnd, bool preMove = false)
+    public void MovePath(Vector2Int pos, Action onEnd = null, bool preMove = false)
     {
         StartCoroutine(MovePathCoro(pos, onEnd, preMove));
     }
@@ -84,7 +98,7 @@ public class Unit : MonoBehaviour, IUnitReliant, IUnitInfo
         StartCoroutine(MoveCoro(transform, (Vector3Int)pos, onEnd, true, preMove));
     }
 
-    public IEnumerator MovePathCoro(Vector2Int pos, Action onEnd, bool preMove = false, bool energy = true)
+    public IEnumerator MovePathCoro(Vector2Int pos, Action onEnd = null, bool preMove = false, bool energy = true)
     {
         Path path = Pathfinding.FindPath(Pos, pos);
         if(energy) path.CutToRange(movesLeft);
@@ -143,8 +157,8 @@ public class Unit : MonoBehaviour, IUnitReliant, IUnitInfo
 
     internal void Attack(Vector3Int slot, SkillAttack skillAttack, Action onEnd)
     {
-        Debug.Log("impl attack");
+        Debug.Log($"Attacking {slot}({Unit.GetUnits((Vector2Int)slot)[0].name}) {skillAttack}");
         energyLeft -= 1;
-        onEnd();
+        onEnd?.Invoke();
     }
 }

@@ -24,27 +24,6 @@ public class CombatFlow:MonoBehaviour, IDisplayUI
         forceEnd = true;
     }
 
-    public IEnumerator NextTurn()
-    {
-        // end turn
-        foreach (var item in Unit.units)
-        {
-            item.LockTurn();
-        }
-        turnOwner = (turnOwner + 1) % 2;
-
-        UIManager.GetUI(announcer).Run(turnOwner == 0 ? "%PlayerTurn" : "%EnemyTurn");
-        // start turn
-        picker.StartTurn();
-        foreach (var item in Unit.units)
-        {
-            item.ResetTurn();
-        }
-        yield return new WaitForSeconds(0.5f);
-        if (!IsPlayerTurn())
-            yield return NextTurn();
-    }
-
     void Update()
     {
         bool endTurn = true;
@@ -62,6 +41,37 @@ public class CombatFlow:MonoBehaviour, IDisplayUI
         {
             forceEnd = false;
             StartCoroutine(NextTurn());
+        }
+    }
+
+    public IEnumerator NextTurn()
+    {
+        Debug.Log("next turn");
+        // end turn
+        foreach (var item in Unit.units)
+        {
+            item.SkipTurn();
+        }
+        turnOwner = (turnOwner + 1) % 2;
+
+        UIManager.GetUI(announcer).Run(turnOwner == 0 ? "%PlayerTurn" : "%EnemyTurn");
+        // start turn
+        picker.StartTurn();
+        foreach (var item in Unit.units)
+        {
+            item.StartTurn();
+        }
+        yield return new WaitForSeconds(0.5f);
+        if (!IsPlayerTurn())
+        {
+            foreach (var item in Unit.units)
+            {
+                if (item.alliance != Unit.playerAlliance)
+                {
+                    yield return item.ai.AiTurn();
+                    yield return new WaitForSeconds(0.5f);
+                }
+            }
         }
     }
 
