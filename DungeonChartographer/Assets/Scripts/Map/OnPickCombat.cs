@@ -7,9 +7,11 @@ public class OnPickCombat : MonoBehaviour, IPlayerPicker
     SlotInfo playerPicked;
 
     [SerializeField] string pickMode = "free";
+
     ISlotPicker slotPicker => BattleManager.I;
     public SkillAttack activeSkill;
     [SerializeField] Unit activeUnit;
+    [SerializeField] Unit attackingUnit;
     CombatFlow combatFlow;
     Interact.InteractProxy proxy;
 
@@ -53,7 +55,7 @@ public class OnPickCombat : MonoBehaviour, IPlayerPicker
                     activeUnit = slot.unit;
                     pickMode = "unit";
                 }
-                else if (pickMode == "unit")
+                else if (pickMode == "unit" || (attackingUnit != null && attackingUnit != slot.unit))
                 {
                     if (slot.unit == null)
                     {
@@ -81,13 +83,22 @@ public class OnPickCombat : MonoBehaviour, IPlayerPicker
                         else if (activeUnit.energyLeft > 0 && activeUnit.alliance == Unit.playerAlliance)
                         {
                             pickMode = "attack";
+                            attackingUnit = slot.unit;
                         }
                     }
                 }
                 else if (pickMode == "attack")
                 {
-                    pickMode = "attacking";
-                    activeUnit.Attack((Vector3Int)slot.slot, activeSkill, AfterMoveOrAfterAttack);
+                    if (attackingUnit == slot.unit)
+                    {
+                        pickMode = "attacking";
+                        activeUnit.Attack((Vector3Int)slot.slot, activeSkill, AfterMoveOrAfterAttack);
+                    }
+                    else
+                    {
+
+                    }
+                    attackingUnit = null;
                 }
             }
             else if (sid == "right")

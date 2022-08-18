@@ -86,7 +86,7 @@ namespace Interact
 		protected void Start()
 		{
 			if (state == "")
-				Debug.LogError("Make sure to assign state here", this);
+				Debug.LogWarning("Make sure to assign state here", this);
 
 			// also starts self
 			if (transform.parent == null || Time.time > 0 || transform.parent.GetComponentInParent<InteractState>() == null)

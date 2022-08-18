@@ -82,7 +82,6 @@ public class Unit : LiveBehaviour, IUnitReliant, IUnitInfo
                     joinNames.Add(item.jointName);
             }
         }
-        Debug.Log($"found units: {foundUnits.Count}");
         return foundUnits;
     }
 
@@ -164,6 +163,6 @@ public class Unit : LiveBehaviour, IUnitReliant, IUnitInfo
         Debug.Log($"Attacking {slot}({GetUnits((Vector2Int)slot)[0].name}) {skillAttack}");
         energyLeft -= 1;
         onEnd?.Invoke();
-        Destroy(gameObject);
+        Destroy(GetUnits((Vector2Int)slot)[0].gameObject);
     }
 }
