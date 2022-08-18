@@ -60,6 +60,7 @@
     <Compile Include="Assets\Scripts\External\Interact\Camera\Camera23d.cs" />
     <Compile Include="Assets\Scripts\External\Interact\Combat\Filters.cs" />
     <Compile Include="Assets\Scripts\External\Interact\Combat\RangeMap.cs" />
+    <Compile Include="Assets\Scripts\Map\LiveBehaviour.cs" />
     <Compile Include="Assets\Scripts\External\Interact\Combat\CameraController.cs" />
     <Compile Include="Assets\Scripts\Map\UITrigger.cs" />
     <Compile Include="Assets\Scripts\Map\SelfCorrection.cs" />
@@ -111,7 +112,10 @@
     <Compile Include="Assets\Scripts\External\Interact\InteractLayer.cs" />
     <Compile Include="Assets\Scripts\External\Interact\Combat\Pathfinding.cs" />
     <Compile Include="Assets\Scripts\External\Interact\Combat\Map.cs" />
-    <Compile Include="Assets\Scripts\Map\LiveBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Map\Spawner.cs" />
+    <Compile Include="Assets\Scripts\Map\UIReadProp.cs" />
+    <Compile Include="Assets\Scripts\Map\InteractProxy.cs" />
+    <Compile Include="Assets\Scripts\Map\IPropWriter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

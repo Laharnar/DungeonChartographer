@@ -38,7 +38,7 @@ public class CombatFlow:LiveBehaviour, IDisplayUI
                 }
             }
         }
-        if (endTurn)
+        if (endTurn && Unit.units.Count > 0)
         {
             forceEnd = false;
             StartCoroutine(NextTurn());

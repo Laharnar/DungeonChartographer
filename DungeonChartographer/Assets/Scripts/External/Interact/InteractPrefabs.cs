@@ -176,6 +176,10 @@ namespace Interact
 			}
 		}
 
+		/// <summary>
+		/// Add all items
+		/// </summary>
+		/// <param name="items"></param>
 		public void Init(ListIter<T> items)
         {
 			this.items.AddRange(items.items);

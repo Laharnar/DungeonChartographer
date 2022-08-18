@@ -4,29 +4,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Unit : MonoBehaviour, IUnitReliant, IUnitInfo
+public class Unit : LiveBehaviour, IUnitReliant, IUnitInfo
 {
-    public Vector2Int Pos { get => Vector2Int.FloorToInt(transform.position); }
-    IUnitInfo IUnitReliant.Unit { get => this; }
-    static Vector3 offset = Vector2.one / 2f;
 
     [SerializeField] float moveSpeed = 10f;
     public int alliance;
-    Animator animator;
     public Transform visuals;
+    public Ai ai;
+    public string jointName;
+
+    Animator animator;
     Vector2 target;
 
-    public static int playerAlliance = 0;
-
-    public static List<Unit> units = new List<Unit>();
     [SerializeField] int moveAmount = 3;
     [SerializeField] int energyAmount = 2;
-    public Ai ai;
+
+    static Vector3 offset = Vector2.one / 2f;
+    public static int playerAlliance = 0;
+    public static List<Unit> units = new List<Unit>();
+
+    public Vector2Int Pos { get => Vector2Int.FloorToInt(transform.position); }
+    IUnitInfo IUnitReliant.Unit { get => this; }
 
     public int energyLeft { get; private set; }
     public int movesLeft { get; private set; }
 
-    private void Awake()
+    protected override void LiveAwake()
     {
         this.GetComponentIfNull(ref ai);
         Logs.ExistsInspector(animator, this, "no animator");
@@ -60,25 +63,26 @@ public class Unit : MonoBehaviour, IUnitReliant, IUnitInfo
         Gizmos.DrawWireCube(Vector3Int.FloorToInt(transform.position) + Vector3.one/2f, Vector3.one);
     }
 
-    public static List<Unit> GetUnits(Vector2Int pos)
+    public static UnitList GetUnits(Vector2Int pos)
     {
-        List<Unit> foundUnits = new List<Unit>();
-        foreach (var item in units)
-        {
-            if (item.Pos == pos)
-                foundUnits.Add(item);
-        }
-        return foundUnits;
+        return GetUnits((unit) => unit.Pos == pos);
     }
 
-    public static List<Unit> GetUnits(Func<Unit, bool> filter)
+    public static UnitList GetUnits(Func<Unit, bool> filter)
     {
-        List<Unit> foundUnits = new List<Unit>();
+        UnitList foundUnits = new UnitList();
+        HashSet<string> joinNames = new HashSet<string>();
         foreach (var item in units)
         {
-            if (filter(item))
+            if (!filter(item)) continue;
+            if (item.jointName == "" || !joinNames.Contains(item.jointName))
+            {
                 foundUnits.Add(item);
+                if (item.jointName != "")
+                    joinNames.Add(item.jointName);
+            }
         }
+        Debug.Log($"found units: {foundUnits.Count}");
         return foundUnits;
     }
 
@@ -157,8 +161,9 @@ public class Unit : MonoBehaviour, IUnitReliant, IUnitInfo
 
     internal void Attack(Vector3Int slot, SkillAttack skillAttack, Action onEnd)
     {
-        Debug.Log($"Attacking {slot}({Unit.GetUnits((Vector2Int)slot)[0].name}) {skillAttack}");
+        Debug.Log($"Attacking {slot}({GetUnits((Vector2Int)slot)[0].name}) {skillAttack}");
         energyLeft -= 1;
         onEnd?.Invoke();
+        Destroy(gameObject);
     }
 }

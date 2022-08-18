@@ -10,10 +10,12 @@ public class PlayerPicker : MonoBehaviour
     public Vector2Int rightSelected { get; private set; }
     
     public IPlayerPicker route;
+    public IPropWriter propWriter;
 
     private void Start()
     {
-        if (route == null) route = GetComponent<IPlayerPicker>();
+        this.GetComponentIfNull(ref route);
+        this.GetComponentIfNull(ref propWriter);
     }
 
     private void OnDrawGizmos()

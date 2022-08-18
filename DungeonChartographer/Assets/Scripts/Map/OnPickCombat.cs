@@ -11,10 +11,12 @@ public class OnPickCombat : MonoBehaviour, IPlayerPicker
     public SkillAttack activeSkill;
     [SerializeField] Unit activeUnit;
     CombatFlow combatFlow;
+    Interact.InteractProxy proxy;
 
     private void Awake()
     {
         Init.GetComponentIfNull(this, ref combatFlow);
+        Init.GetComponentIfNull(this, ref proxy);
     }
 
     void AfterMoveOrAfterAttack()
@@ -45,6 +47,7 @@ public class OnPickCombat : MonoBehaviour, IPlayerPicker
             {
                 var slot = slotPicker.GetSlot(picker.leftSelected);
                 playerPicked = slot;
+                if(proxy)proxy.proxy.store.SetPropInt("slotCount", slot.units.Count.ToString());
                 if (pickMode == "free" && slot.unit != null)
                 {
                     activeUnit = slot.unit;
@@ -75,7 +78,7 @@ public class OnPickCombat : MonoBehaviour, IPlayerPicker
                             pickMode = "unit";
                             activeUnit = slot.unit;
                         }
-                        else if (activeUnit.energyLeft > 0)
+                        else if (activeUnit.energyLeft > 0 && activeUnit.alliance == Unit.playerAlliance)
                         {
                             pickMode = "attack";
                         }

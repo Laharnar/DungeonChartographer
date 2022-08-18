@@ -16,10 +16,12 @@ namespace Interact
 		void Tick2(IInteractCode runner);
 	}
 
-	public class InteractState : ComponentMono
+	public class InteractState : InteractProxy
 	{
 
 		public string state;
+		protected SpriteRenderer sprite;
+		public Collider2D _collider;
 
 		[Header("Obsolete use Quick"), HideInInspector]
 		public List<InteractRules> statics = new List<InteractRules>();
@@ -51,10 +53,12 @@ namespace Interact
 		float tickTime = 0;
 		float lastTime = -1;
 
-		void Awake()
+		protected override void LiveAwake()
 		{
+			proxy = this;// always override
 			ValidateComponents();
-			
+			sprite = transform.GetComponent<SpriteRenderer>();
+			if (_collider == null) _collider = GetComponent<Collider2D>();
 		}
 
 		void OnDestroy()
@@ -79,12 +83,10 @@ namespace Interact
 				TickE2 = (tunnel as IInteractTunnel2).Tick2;
 		}
 
-		protected override void Start()
+		protected void Start()
 		{
-			base.Start();
 			if (state == "")
 				Debug.LogError("Make sure to assign state here", this);
-
 
 			// also starts self
 			if (transform.parent == null || Time.time > 0 || transform.parent.GetComponentInParent<InteractState>() == null)
@@ -266,18 +268,6 @@ namespace Interact
 				action.target = target;
 				action.self = this;
 			}
-		}
-	}
-
-	public class ComponentMono : MonoBehaviour
-	{
-		protected SpriteRenderer sprite;
-		public Collider2D _collider;
-
-		protected virtual void Start()
-		{
-			sprite = transform.GetComponent<SpriteRenderer>();
-			if (_collider == null) _collider = GetComponent<Collider2D>();
 		}
 	}
 
