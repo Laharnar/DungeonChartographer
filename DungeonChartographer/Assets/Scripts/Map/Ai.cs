@@ -12,7 +12,7 @@ public class Ai : MonoBehaviour
 
     internal IEnumerator AiTurn()
     {
-        var enemies = Unit.GetUnits((item) => item.alliance != self.alliance);
+        var enemies = Unit.GetUniqueUnits((item) => item.alliance != self.alliance);
         float min = float.MaxValue;
         Unit target = null;
         foreach (var item in enemies)

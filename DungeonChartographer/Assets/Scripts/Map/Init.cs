@@ -3,7 +3,13 @@ using UnityEngine;
 
 public static class Init
 {
-    public static void GetComponentIfNull<T>(this MonoBehaviour mono, ref T value)
+    public static void GetComponentIfNull<T>(this GameObject mono, ref T value)
+    {
+        if (value == null)
+            value = mono.GetComponent<T>();
+    }
+
+    public static void GetComponentIfNull<T>(this Component mono, ref T value)
     {
         if (value == null)
             value = mono.GetComponent<T>();

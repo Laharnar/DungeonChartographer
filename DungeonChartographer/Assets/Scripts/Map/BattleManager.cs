@@ -20,12 +20,12 @@ public class BattleManager: MonoBehaviour, ISlotPicker
 
     public SlotInfo GetSlot(Vector2Int pos)
     {
-        return new SlotInfo(pos, Unit.GetUnits(pos));
+        return new SlotInfo(pos, Unit.GetUniqueUnits(pos));
     }
 
     public SlotInfo GetSlot(Vector2 pos)
     {
         Vector2Int i2 = Vector2Int.FloorToInt(pos);
-        return new SlotInfo(i2, Unit.GetUnits(i2));
+        return new SlotInfo(i2, Unit.GetUniqueUnits(i2));
     }
 }

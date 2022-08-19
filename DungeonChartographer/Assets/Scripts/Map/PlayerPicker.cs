@@ -49,9 +49,4 @@ public class PlayerPicker : MonoBehaviour
             }
         }
     }
-
-    public void OnPickSkillUI(int id)
-    {
-        route.OnPickerPicks(new object[2]{ "skillui", id}, this);
-    }
 }

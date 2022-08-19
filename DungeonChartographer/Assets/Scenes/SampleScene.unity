@@ -154,6 +154,44 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &262291557
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 262291558}
+  m_Layer: 5
+  m_Name: AttackUiList
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &262291558
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 262291557}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1262412687}
+  - {fileID: 457486706}
+  m_Father: {fileID: 825234457}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &313387326
 GameObject:
   m_ObjectHideFlags: 0
@@ -668,7 +706,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1088901756}
-  m_Father: {fileID: 825234457}
+  m_Father: {fileID: 262291558}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
@@ -719,7 +757,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 457486708}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 825234458}
+        m_TargetAssemblyTypeName: SkillDisplay, Assembly-CSharp
+        m_MethodName: SelectSkill
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &457486708
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -910,6 +960,44 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiKey: show turn
   displayText: 
+--- !u!1 &486620599
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 486620600}
+  m_Layer: 5
+  m_Name: Other
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &486620600
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 486620599}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 533234586}
+  - {fileID: 1217613867}
+  m_Father: {fileID: 825234457}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &518081288
 GameObject:
   m_ObjectHideFlags: 0
@@ -955,11 +1043,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 735a4a40f68e0a94ea2ba15c6c43a0c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  alias: enemy
   moveSpeed: 10
   alliance: 1
   visuals: {fileID: 1215123485}
   ai: {fileID: 518081292}
   jointName: 
+  energyProxy: 
   moveAmount: 3
   energyAmount: 2
 --- !u!4 &518081291
@@ -1100,12 +1190,12 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 533234585}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 825234457}
+  m_Father: {fileID: 486620600}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1196,6 +1286,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pickMode: free
+  activeSkill:
+    skillId: 0
+    unit: {fileID: 0}
   activeUnit: {fileID: 0}
 --- !u!4 &563130130
 Transform:
@@ -1273,11 +1366,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 735a4a40f68e0a94ea2ba15c6c43a0c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  alias: player
   moveSpeed: 10
   alliance: 0
   visuals: {fileID: 1209671524}
   ai: {fileID: 0}
   jointName: 
+  energyProxy: waterplayer
   moveAmount: 3
   energyAmount: 2
 --- !u!4 &695347502
@@ -1319,6 +1414,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 825234457}
+  - component: {fileID: 825234458}
   m_Layer: 5
   m_Name: AttackUi
   m_TagString: Untagged
@@ -1338,10 +1434,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 533234586}
-  - {fileID: 1217613867}
-  - {fileID: 1262412687}
-  - {fileID: 457486706}
+  - {fileID: 486620600}
+  - {fileID: 262291558}
   m_Father: {fileID: 990006668}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1350,6 +1444,22 @@ RectTransform:
   m_AnchoredPosition: {x: -55.6, y: -183.85}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &825234458
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 825234456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 538c7d37d7215124f9c1ca802be172c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  picker: {fileID: 563130127}
+  ui: {fileID: 262291557}
+  buttons: []
+  texts: []
 --- !u!1 &990006664
 GameObject:
   m_ObjectHideFlags: 0
@@ -1500,11 +1610,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 735a4a40f68e0a94ea2ba15c6c43a0c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  alias: player
   moveSpeed: 10
   alliance: 0
   visuals: {fileID: 434078317}
   ai: {fileID: 0}
   jointName: 
+  energyProxy: 
   moveAmount: 3
   energyAmount: 2
 --- !u!114 &1047510005
@@ -1565,11 +1677,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 735a4a40f68e0a94ea2ba15c6c43a0c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  alias: player
   moveSpeed: 10
   alliance: 0
   visuals: {fileID: 443314122}
   ai: {fileID: 0}
   jointName: 
+  energyProxy: 
   moveAmount: 3
   energyAmount: 2
 --- !u!4 &1072356049
@@ -1995,12 +2109,12 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1217613866}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 825234457}
+  m_Father: {fileID: 486620600}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
@@ -2166,6 +2280,7 @@ MonoBehaviour:
   spawnObject: {fileID: 5678406837617953166, guid: d11ea4c6caf3a924f8ed7f8eb5e4d8c3, type: 3}
   spawnParent: {fileID: 1626283594}
   onlyOnMove: 1
+  spawnOnStart: 1
 --- !u!1 &1262412686
 GameObject:
   m_ObjectHideFlags: 0
@@ -2198,7 +2313,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 436134556}
-  m_Father: {fileID: 825234457}
+  m_Father: {fileID: 262291558}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
@@ -2249,7 +2364,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1262412689}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 825234458}
+        m_TargetAssemblyTypeName: SkillDisplay, Assembly-CSharp
+        m_MethodName: SelectSkill
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1262412689
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2666,37 +2793,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 8
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2146504024
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2146504025}
-  m_Layer: 0
-  m_Name: 'Fix: can''t attack with enemies'
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2146504025
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2146504024}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.5, y: -6.5, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2147261240
 GameObject:

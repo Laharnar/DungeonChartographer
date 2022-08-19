@@ -9,7 +9,7 @@ public class SelfCorrection : MonoBehaviour
 
     private IEnumerator Start()
     {
-        var units = Unit.GetUnits(Vector2Int.FloorToInt(transform.position));
+        var units = Unit.GetUniqueUnits(Vector2Int.FloorToInt(transform.position));
         if (units.Count > 1)
         {
             this.GetComponentIfNull(ref unit);

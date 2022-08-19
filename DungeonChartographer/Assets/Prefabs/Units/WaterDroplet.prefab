@@ -94,6 +94,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5678406837617953166}
   - component: {fileID: 5678406837617953167}
+  - component: {fileID: 974725321781566971}
   m_Layer: 0
   m_Name: WaterDroplet
   m_TagString: Untagged
@@ -129,10 +130,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 735a4a40f68e0a94ea2ba15c6c43a0c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  alias: water
   moveSpeed: 10
   alliance: 0
   visuals: {fileID: 5678406836945581738}
   ai: {fileID: 0}
   jointName: water
+  energyProxy: waterplayer
   moveAmount: 3
   energyAmount: 2
+--- !u!114 &974725321781566971
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5678406837617953200}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f398da4e921c09c45aebc36d4bb82ad5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnObject: {fileID: 5678406837617953166}
+  spawnParent: {fileID: 0}
+  onlyOnMove: 1
+  spawnOnStart: 0

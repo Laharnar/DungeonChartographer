@@ -11,8 +11,14 @@ public class UnitList:List<Unit>
             if (item.jointName == "")
                 return item;
         }
+        foreach (var item in this)
+        {
+            if (item.jointName != "")
+                return item;
+        }
         return null;
     }
+
 }
 
 public class SlotInfo

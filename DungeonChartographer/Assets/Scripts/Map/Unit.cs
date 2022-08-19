@@ -7,11 +7,13 @@ using UnityEngine;
 public class Unit : LiveBehaviour, IUnitReliant, IUnitInfo
 {
 
+    public string alias;
     [SerializeField] float moveSpeed = 10f;
     public int alliance;
     public Transform visuals;
     public Ai ai;
     public string jointName;
+    public string energyProxy;
 
     Animator animator;
     Vector2 target;
@@ -63,12 +65,23 @@ public class Unit : LiveBehaviour, IUnitReliant, IUnitInfo
         Gizmos.DrawWireCube(Vector3Int.FloorToInt(transform.position) + Vector3.one/2f, Vector3.one);
     }
 
-    public static UnitList GetUnits(Vector2Int pos)
+    public static UnitList GetUniqueUnits(Vector2Int pos)
     {
-        return GetUnits((unit) => unit.Pos == pos);
+        return GetUniqueUnits((unit) => unit.Pos == pos);
     }
 
     public static UnitList GetUnits(Func<Unit, bool> filter)
+    {
+        UnitList foundUnits = new UnitList();
+        foreach (var item in units)
+        {
+            if (!filter(item)) continue;
+            foundUnits.Add(item);
+        }
+        return foundUnits;
+    }
+
+    public static UnitList GetUniqueUnits(Func<Unit, bool> filter)
     {
         UnitList foundUnits = new UnitList();
         HashSet<string> joinNames = new HashSet<string>();
@@ -160,9 +173,30 @@ public class Unit : LiveBehaviour, IUnitReliant, IUnitInfo
 
     internal void Attack(Vector3Int slot, SkillAttack skillAttack, Action onEnd)
     {
-        Debug.Log($"Attacking {slot}({GetUnits((Vector2Int)slot)[0].name}) {skillAttack}");
+        var unit = GetUniqueUnits((Vector2Int)slot)[0];
+        Debug.Log($"Attacking {name}{slot}({unit.name}) {skillAttack}");
+        HashSet<Unit> joins = new HashSet<Unit>();
+        if (jointName != "")
+        {
+            var jointUnits = GetUnits((unit) => unit.jointName == jointName);
+            joins = new HashSet<Unit>(jointUnits);
+            foreach (var item in jointUnits)
+            {
+                if(item != this)
+                    item.energyLeft -= 1;
+            }
+        }
         energyLeft -= 1;
+        if (energyProxy != "")
+        {
+            var proxy = GetUnits((unit) => unit.energyProxy == energyProxy);
+            foreach (var item in proxy)
+            {
+                if (item != this && !joins.Contains(item))
+                    item.energyLeft -= 1;
+            }
+        }
+        Destroy(unit.gameObject);
         onEnd?.Invoke();
-        Destroy(GetUnits((Vector2Int)slot)[0].gameObject);
     }
 }
