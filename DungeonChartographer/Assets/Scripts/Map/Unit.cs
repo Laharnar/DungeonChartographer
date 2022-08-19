@@ -19,6 +19,7 @@ public class Unit : LiveBehaviour, IUnitReliant, IUnitInfo
 
     Animator animator;
     Vector2 target;
+    public Skill skill;
 
     [SerializeField] int moveAmount = 3;
     [SerializeField] int energyAmount = 2;
@@ -175,6 +176,7 @@ public class Unit : LiveBehaviour, IUnitReliant, IUnitInfo
 
     internal void Attack(Vector3Int slot, SkillAttack skillAttack, Action onEnd)
     {
+        skillAttack.self = this;
         var unit = GetUniqueUnits((Vector2Int)slot)[0];
         Debug.Log($"Attacking {name}{slot}({unit.name}) {skillAttack}");
         HashSet<Unit> joins = new HashSet<Unit>();
@@ -198,8 +200,14 @@ public class Unit : LiveBehaviour, IUnitReliant, IUnitInfo
                     item.energyLeft -= 1;
             }
         }
-        if((recvDmgMap | givedmgMap) != 0)
-            Destroy(unit.gameObject);
+        Debug.Log(unit.recvDmgMap & givedmgMap);
+        if ((unit.recvDmgMap & givedmgMap) != 0)
+        {
+            if (skill)
+                skill.Activate(skillAttack);
+            else
+                Destroy(unit.gameObject);
+        }
         onEnd?.Invoke();
     }
 }

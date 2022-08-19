@@ -3,6 +3,7 @@ public class SkillAttack
 {
     public int skillId;
     public Unit unit;
+    public Unit self;
 
     public override string ToString()
     {

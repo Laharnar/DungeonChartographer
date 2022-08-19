@@ -112,6 +112,7 @@
     <Compile Include="Assets\Scripts\Map\BattleManager.cs" />
     <Compile Include="Assets\Scripts\External\Interact\Combat\IUnitUser.cs" />
     <Compile Include="Assets\Scripts\Map\IPlayerPicker.cs" />
+    <Compile Include="Assets\Scripts\Map\Skill.cs" />
     <Compile Include="Assets\Scripts\External\Interact\InteractState.cs" />
     <Compile Include="Assets\Scripts\External\Interact\InteractLayer.cs" />
     <Compile Include="Assets\Scripts\Map\InteractProxy.cs" />
