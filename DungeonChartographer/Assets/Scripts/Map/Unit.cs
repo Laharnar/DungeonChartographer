@@ -14,6 +14,8 @@ public class Unit : LiveBehaviour, IUnitReliant, IUnitInfo
     public Ai ai;
     public string jointName;
     public string energyProxy;
+    public int givedmgMap = 1;
+    public int recvDmgMap = 1;
 
     Animator animator;
     Vector2 target;
@@ -196,7 +198,8 @@ public class Unit : LiveBehaviour, IUnitReliant, IUnitInfo
                     item.energyLeft -= 1;
             }
         }
-        Destroy(unit.gameObject);
+        if((recvDmgMap | givedmgMap) != 0)
+            Destroy(unit.gameObject);
         onEnd?.Invoke();
     }
 }

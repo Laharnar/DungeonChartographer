@@ -192,37 +192,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &313387326
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 313387327}
-  m_Layer: 0
-  m_Name: 'NEXT: Water attack use is linked to player energy'
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &313387327
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 313387326}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.5, y: -6.5, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 10
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &338585834
 GameObject:
   m_ObjectHideFlags: 0
@@ -1050,6 +1019,8 @@ MonoBehaviour:
   ai: {fileID: 518081292}
   jointName: 
   energyProxy: 
+  givedmgMap: 1
+  recvDmgMap: 1
   moveAmount: 3
   energyAmount: 2
 --- !u!4 &518081291
@@ -1373,6 +1344,8 @@ MonoBehaviour:
   ai: {fileID: 0}
   jointName: 
   energyProxy: waterplayer
+  givedmgMap: 1
+  recvDmgMap: 1
   moveAmount: 3
   energyAmount: 2
 --- !u!4 &695347502
@@ -1405,6 +1378,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destroyOnUse: 1
   unit: {fileID: 0}
+--- !u!1 &740092804
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 740092805}
+  m_Layer: 0
+  m_Name: 'NEXT: Map exploration'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &740092805
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 740092804}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -8.5, y: -6.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &825234456
 GameObject:
   m_ObjectHideFlags: 0
@@ -1617,6 +1621,8 @@ MonoBehaviour:
   ai: {fileID: 0}
   jointName: 
   energyProxy: 
+  givedmgMap: 1
+  recvDmgMap: 1
   moveAmount: 3
   energyAmount: 2
 --- !u!114 &1047510005
@@ -1684,6 +1690,8 @@ MonoBehaviour:
   ai: {fileID: 0}
   jointName: 
   energyProxy: 
+  givedmgMap: 1
+  recvDmgMap: 1
   moveAmount: 3
   energyAmount: 2
 --- !u!4 &1072356049

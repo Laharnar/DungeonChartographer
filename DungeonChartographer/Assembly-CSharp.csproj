@@ -72,6 +72,7 @@
     <Compile Include="Assets\Scripts\Map\IPropWriter.cs" />
     <Compile Include="Assets\Scripts\External\Interact\Support\SoundsLib.cs" />
     <Compile Include="Assets\Scripts\External\Interact\InteractMoveProps.cs" />
+    <Compile Include="Assets\Scripts\Map\SkillDisplay.cs" />
     <Compile Include="Assets\Scripts\External\Interact\NodeManager.cs" />
     <Compile Include="Assets\Scripts\External\Interact\Combat\RunDisplace.cs" />
     <Compile Include="Assets\Scripts\Map\Init.cs" />
@@ -91,6 +92,7 @@
     <Compile Include="Assets\Scripts\Map\IDisplayUI.cs" />
     <Compile Include="Assets\Scripts\Map\UIManager.cs" />
     <Compile Include="Assets\Scripts\Map\UIShowTurn.cs" />
+    <Compile Include="Assets\Scripts\Map\UIButton.cs" />
     <Compile Include="Assets\Scripts\External\Interact\Support\ZOrderController.cs" />
     <Compile Include="Assets\Scripts\External\Interact\Support\Aim.cs" />
     <Compile Include="Assets\Scripts\Map\SkillAttack.cs" />
@@ -116,8 +118,6 @@
     <Compile Include="Assets\Scripts\External\Interact\Combat\Pathfinding.cs" />
     <Compile Include="Assets\Scripts\Map\UIReadProp.cs" />
     <Compile Include="Assets\Scripts\External\Interact\Combat\Map.cs" />
-    <Compile Include="Assets\Scripts\Map\SkillDisplay.cs" />
-    <Compile Include="Assets\Scripts\Map\UIButton.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

@@ -137,6 +137,8 @@ MonoBehaviour:
   ai: {fileID: 0}
   jointName: water
   energyProxy: waterplayer
+  givedmgMap: 0
+  recvDmgMap: 0
   moveAmount: 3
   energyAmount: 2
 --- !u!114 &974725321781566971
