@@ -14,6 +14,8 @@ public static class UIManager
 
     internal static IDisplayUI GetUI(string key)
     {
-        return display[key];
+        if (display.ContainsKey(key))
+            return display[key];
+        return null;
     }
 }

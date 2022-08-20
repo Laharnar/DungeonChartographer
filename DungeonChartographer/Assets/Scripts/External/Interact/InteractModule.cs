@@ -7,7 +7,7 @@ using UnityEngine.Serialization;
 namespace Interact
 {
     // Loads different variations of implementations into realtime.
-    public class InteractModule : MonoBehaviour
+    public class InteractModule : LiveBehaviour
     {
         [SerializeField] InteractBox layers;
         [SerializeField] List<InteractBoxPref> boxes = new List<InteractBoxPref>();
@@ -34,7 +34,7 @@ namespace Interact
             if(runtimeLayers== null ) runtimeLayers = new InteractBox();
         }
 
-        void Awake()
+        protected override void LiveAwake()
         {
             ValidateComponents();
             runtimeLayers = CreateBox();

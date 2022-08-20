@@ -64,8 +64,13 @@ public class CombatFlow:LiveBehaviour, IDisplayUI
         yield return new WaitForSeconds(0.5f);
         if (!IsPlayerTurn())
         {
-            foreach (var item in Unit.units)
+            var temp = new UnitList();
+            temp.AddRange(Unit.units);
+            for (int i = 0; i < temp.Count; i++)
             {
+                var item = temp[i];
+                if (item == null)
+                    continue;
                 if (item.alliance != Unit.playerAlliance)
                 {
                     yield return item.ai.AiTurn();

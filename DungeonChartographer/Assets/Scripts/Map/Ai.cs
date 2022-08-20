@@ -24,7 +24,7 @@ public class Ai : MonoBehaviour
         }
         if (target == null) yield break;
         yield return self.MovePathCoro(target.Pos);
-        self.Attack((Vector3Int)target.Pos, null, null);
+        self.Attack((Vector3Int)target.Pos, new SkillAttack() { unit = target, self = self }, null);
         self.SkipTurn();
     }
 }

@@ -26,7 +26,7 @@ public class Unit : LiveBehaviour, IUnitReliant, IUnitInfo
 
     static Vector3 offset = Vector2.one / 2f;
     public static int playerAlliance = 0;
-    public static List<Unit> units = new List<Unit>();
+    public static List<Unit> units;
 
     public Vector2Int Pos { get => Vector2Int.FloorToInt(transform.position); }
     IUnitInfo IUnitReliant.Unit { get => this; }
@@ -36,6 +36,7 @@ public class Unit : LiveBehaviour, IUnitReliant, IUnitInfo
 
     protected override void LiveAwake()
     {
+        if(units == null) units = new List<Unit>();
         this.GetComponentIfNull(ref ai);
         Logs.ExistsInspector(animator, this, "no animator");
         if (visuals == null) visuals = transform;
@@ -136,6 +137,7 @@ public class Unit : LiveBehaviour, IUnitReliant, IUnitInfo
             yield return MoveCoro(obj, (Vector2)path.First, onEnd:null, last:path.StepCount == 1, preMove:false);
             path.RemoveFirst();
         }
+        yield return null;
         onEnd?.Invoke();
     }
 
@@ -200,7 +202,6 @@ public class Unit : LiveBehaviour, IUnitReliant, IUnitInfo
                     item.energyLeft -= 1;
             }
         }
-        Debug.Log(unit.recvDmgMap & givedmgMap);
         if ((unit.recvDmgMap & givedmgMap) != 0)
         {
             if (skill)
