@@ -10,6 +10,7 @@ public class CombatFlow:LiveBehaviour, IDisplayUI
     [SerializeField] string endTurnUiKey = "end turn";
     public bool forceEnd = false;
     OnPickCombat picker;
+    private object running;
 
     protected override void LiveAwake()
     {
@@ -41,13 +42,15 @@ public class CombatFlow:LiveBehaviour, IDisplayUI
         if (endTurn && Unit.units.Count > 0)
         {
             forceEnd = false;
-            StartCoroutine(NextTurn());
+            if(running == null)
+                running = StartCoroutine( NextTurn());
         }
     }
 
     public IEnumerator NextTurn()
     {
-        // end turn
+        
+        // end turn (for ALL units)
         foreach (var item in Unit.units)
         {
             item.SkipTurn();
@@ -68,6 +71,7 @@ public class CombatFlow:LiveBehaviour, IDisplayUI
             temp.AddRange(Unit.units);
             for (int i = 0; i < temp.Count; i++)
             {
+                yield return null;
                 var item = temp[i];
                 if (item == null)
                     continue;
@@ -78,6 +82,7 @@ public class CombatFlow:LiveBehaviour, IDisplayUI
                 }
             }
         }
+        running = null;
     }
 
     internal static bool IsPlayerTurn()

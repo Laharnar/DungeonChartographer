@@ -7,7 +7,7 @@ namespace Combat
 {
     public static class Pathfinding
     {
-        private const uint PATHFINDING_MAX_DEPTH = 1000; // for debug purposes to avoid infinite loop
+        private const uint PATHFINDING_MAX_DEPTH = 500; // for debug purposes to avoid infinite loop
         static RangeMapReadOnly worldMap => Filters.FreshWorldMap();
 
         public static RangeMap Flood(Vector2Int start, int distance, bool startOnlyIfFree, bool removeFilledStart)
@@ -373,7 +373,7 @@ namespace Combat
             {
                 return "(invalid path)";
             }
-            return string.Join("->", path);
+            return $"[{path.Count}] {string.Join("->", path)}";
         }
 
         public static Path Empty { get { return new Path(new Vector2Int[0], Levels.AllConditions); } }

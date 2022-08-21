@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class PlayerPicker : MonoBehaviour
+public class PlayerPicker : LiveBehaviour
 {
     Vector2 mouse;
     Vector2Int hovered;
@@ -12,7 +12,7 @@ public class PlayerPicker : MonoBehaviour
     public IPlayerPicker route;
     public IPropWriter propWriter;
 
-    private void Start()
+    protected override void LiveAwake()
     {
         this.GetComponentIfNull(ref route);
         this.GetComponentIfNull(ref propWriter);

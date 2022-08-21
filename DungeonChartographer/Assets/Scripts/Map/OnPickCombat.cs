@@ -63,7 +63,7 @@ public class OnPickCombat : MonoBehaviour, IPlayerPicker
                     {
                         if (activeUnit.alliance == Unit.playerAlliance)
                         {
-                            if (activeUnit.movesLeft > 0)
+                            if (activeUnit.movesLeft > 0 && activeUnit.jointName == "")
                             {
                                 activeUnit.MovePath(slot.slot, AfterMoveOrAfterAttack);
                                 pickMode = "moving";

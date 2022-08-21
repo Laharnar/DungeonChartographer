@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class SkillDisplay : MonoBehaviour
+public class SkillDisplay : LiveBehaviour
 {
     public GameObject picker;
     public GameObject ui;
@@ -11,7 +11,7 @@ public class SkillDisplay : MonoBehaviour
     SlotInfo lastSlot = null;
     private int selectedSkill;
 
-    private void Awake()
+    protected override void LiveAwake()
     {
         this.GetGameObjIfNull(ref picker);
         this.GetGameObjIfNull(ref ui);

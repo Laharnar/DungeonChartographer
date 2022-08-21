@@ -120,8 +120,8 @@ public class Unit : LiveBehaviour, IUnitReliant, IUnitInfo
 
     public IEnumerator MovePathCoro(Vector2Int pos, Action onEnd = null, bool preMove = false, bool energy = true)
     {
-        Path path = Pathfinding.FindPath(Pos, pos);
-        if(energy) path.CutToRange(movesLeft);
+        Path path = Pathfinding.FindPath(Pos, pos);//new Path(new []{ pos }, Path.Levels.AllConditions);//
+        if (energy) path.CutToRange(movesLeft);
         Debug.Log($"Move path: {name} -> {pos} | path:{path.StepCount} ");
         Transform obj = transform;
         if (preMove && visuals != obj)
@@ -131,10 +131,11 @@ public class Unit : LiveBehaviour, IUnitReliant, IUnitInfo
             obj = visuals;
             obj.position = current;
         }
-        if(energy) movesLeft -= path.StepCount;
+        if (energy) movesLeft -= (path.StepCount);
         while (path.StepCount > 0)
         {
             yield return MoveCoro(obj, (Vector2)path.First, onEnd:null, last:path.StepCount == 1, preMove:false);
+            yield return null;
             path.RemoveFirst();
         }
         yield return null;
@@ -145,7 +146,8 @@ public class Unit : LiveBehaviour, IUnitReliant, IUnitInfo
     {
         pos += offset;
         PlayBoolAnimation("move", true);
-        
+        yield return null;
+
         var mdir = Vector2Int.FloorToInt(pos) - Vector2Int.FloorToInt(obj.position);
         if (preMove)
         {
@@ -155,7 +157,7 @@ public class Unit : LiveBehaviour, IUnitReliant, IUnitInfo
         }
         var dir = pos - obj.position;
         var magnitude = dir.magnitude;
-        while (magnitude > 0.2f)
+        while (magnitude > 0.1f)
         {
             dir = pos - obj.position;
             magnitude = dir.magnitude;
@@ -179,7 +181,7 @@ public class Unit : LiveBehaviour, IUnitReliant, IUnitInfo
     internal void Attack(Vector3Int slot, SkillAttack skillAttack, Action onEnd)
     {
         skillAttack.self = this;
-        var unit = GetUniqueUnits((Vector2Int)slot)[0];
+        var unit = GetUniqueUnits((unit) => unit.jointName == "" && unit.Pos == (Vector2Int)slot)[0];
         Debug.Log($"Attacking {name}{slot}({unit.name}) {skillAttack}");
         HashSet<Unit> joins = new HashSet<Unit>();
         if (jointName != "")
