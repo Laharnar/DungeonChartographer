@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class BattleProxy : MonoBehaviour, ITFuncStr
 {
@@ -22,11 +24,45 @@ public class BattleProxy : MonoBehaviour, ITFuncStr
     {
         Debug.Log("Escape");
         UIManager.GetUI("Escape")?.Run("show");
+        Dungeon.EscapedBattle();
     }
 
     private void Flee()
     {
         Debug.Log("Flee");
         UIManager.GetUI("Flee")?.Run("show");
+        Dungeon.FleedBattle();
+    }
+}
+
+public class Dungeon
+{
+    internal static void EscapedBattle()
+    {
+        throw new NotImplementedException();
+    }
+
+    internal static void FleedBattle()
+    {
+        throw new NotImplementedException();
+    }
+
+    internal static void WonBattle()
+    {
+        throw new NotImplementedException();
+    }
+
+    internal static void Died()
+    {
+
+    }
+
+    internal static void FinishedDungeon()
+    {
+
+    }
+    internal static void ExitedDungeon()
+    {
+
     }
 }
