@@ -7,12 +7,15 @@ namespace Combat
 {
     public static class Pathfinding
     {
-        private const uint PATHFINDING_MAX_DEPTH = 500; // for debug purposes to avoid infinite loop
+        private const uint PATHFINDING_MAX_DEPTH = 500
+            ; // for debug purposes to avoid infinite loop
         static RangeMapReadOnly worldMap => Filters.FreshWorldMap();
 
         public static RangeMap Flood(Vector2Int start, int distance, bool startOnlyIfFree, bool removeFilledStart)
         {
             if (!startOnlyIfFree && !BattleManager.I.GetSlot(start).IsWalkable) { return RangeMap.Empty; }
+
+            distance = Mathf.Max(distance, 0); // negative value into hashset throws exception
 
             RangeMap floodMap = new RangeMap();
             floodMap.Add(start);
