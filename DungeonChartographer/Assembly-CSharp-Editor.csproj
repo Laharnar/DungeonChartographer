@@ -57,9 +57,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Editor\Scripts\Interact\LogsWindow.cs" />
+    <Compile Include="Assets\Editor\Scripts\Interact\InteractTriggerDrawer.cs" />
     <Compile Include="Assets\Editor\Scripts\Interact\NodeManagerWindow.cs" />
     <Compile Include="Assets\Editor\Scripts\Interact\InteractWindow.cs" />
-    <Compile Include="Assets\Editor\Scripts\Interact\InteractTriggerDrawer.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

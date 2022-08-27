@@ -83,6 +83,7 @@
     <Compile Include="Assets\Scripts\Map\OnPickCombat.cs" />
     <Compile Include="Assets\Scripts\External\Interact\InteractPrefabs.cs" />
     <Compile Include="Assets\Scripts\External\Interact\Support\InteractUtils.cs" />
+    <Compile Include="Assets\Scripts\Map\DungeonMapExplorer.cs" />
     <Compile Include="Assets\Scripts\External\Interact\InteractModule.cs" />
     <Compile Include="Assets\Scripts\External\Interact\Combat\DisplacementAction.cs" />
     <Compile Include="Assets\Scripts\External\Interact\InteractBoxPref.cs" />
@@ -115,6 +116,7 @@
     <Compile Include="Assets\Scripts\Map\Zone.cs" />
     <Compile Include="Assets\Scripts\Map\IPlayerPicker.cs" />
     <Compile Include="Assets\Scripts\Map\Skill.cs" />
+    <Compile Include="Assets\Scripts\Map\DungeonMapUncover.cs" />
     <Compile Include="Assets\Scripts\External\Interact\InteractState.cs" />
     <Compile Include="Assets\Scripts\External\Interact\InteractLayer.cs" />
     <Compile Include="Assets\Scripts\Map\InteractProxy.cs" />

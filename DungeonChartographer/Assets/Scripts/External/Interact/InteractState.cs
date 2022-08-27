@@ -19,7 +19,7 @@ namespace Interact
 	public class InteractState : InteractProxy
 	{
 
-		public string state;
+		public string state = "undefined";
 		protected SpriteRenderer sprite;
 		public Collider2D _collider;
 
@@ -161,7 +161,7 @@ namespace Interact
 			TickE(this, module.GetRules(timedRule), logs.logTimed, false);
 		}
 
-		void OnTriggerEnter2D(Collider2D collider)
+		public void OnTriggerEnter2D(Collider2D collider)
 		{
 			InteractState x;
 			if (collider.gameObject != gameObject && collider.TryGetComponent(out x))
