@@ -60,6 +60,7 @@
     <Compile Include="Assets\Editor\Scripts\Interact\InteractTriggerDrawer.cs" />
     <Compile Include="Assets\Editor\Scripts\Interact\NodeManagerWindow.cs" />
     <Compile Include="Assets\Editor\Scripts\Interact\InteractWindow.cs" />
+    <Compile Include="Assets\Editor\Scripts\Interact\LiveBehaviourEditor.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
