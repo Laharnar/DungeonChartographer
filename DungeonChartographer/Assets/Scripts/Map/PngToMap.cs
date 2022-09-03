@@ -11,10 +11,11 @@ public class PngToMap : LiveEditorBehaviour
     TransformPool map;
     Texture2D tex;
 
-    protected override void LiveAwake()
+    protected override UpdateImportance EditorLiveAwake()
     {
         map = new TransformPool(ground.prefab, parentItem);
         update = tex != texture;
+        return update ? UpdateImportance.High : UpdateImportance.None;
     }
 
     private void Update()

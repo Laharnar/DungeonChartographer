@@ -6,12 +6,31 @@ using UnityEngine;
 public abstract class LiveEditorBehaviour : LiveBehaviour
 {
 
+    public enum UpdateImportance
+    {
+        High,
+        Low,
+        None
+    }
+    /// <summary>
+    /// Public only for editors
+    /// </summary>
+    [HideInInspector] public float editorAwake = 0;
+
+    /// <summary>
+    /// Use editor awake instead
+    /// </summary>
+    protected sealed override void LiveAwake()
+    {
+        if(EditorLiveAwake() == UpdateImportance.High)
+            editorAwake = Time.time;
+    }
+
+    protected virtual UpdateImportance EditorLiveAwake() => UpdateImportance.High;
 }
 
 public abstract class LiveBehaviour : MonoBehaviour
 {
-    public static float reloadTime = 0;
-
     interface ILiveAwakeCoro
     {
         IEnumerator LiveAwakeCoro();
@@ -39,7 +58,6 @@ public abstract class LiveBehaviour : MonoBehaviour
             item.LiveAwake();
             behaviours.Add(item);
         }
-        reloadTime = Time.time;
     }
 #endif
 

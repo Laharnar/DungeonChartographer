@@ -22,7 +22,9 @@ namespace Interact
         {
             GUIStyle style = new GUIStyle(GUI.skin.label);
             style.richText = true;
-            GUILayout.Label($"<color=yellow>[InEditor({(int)LiveBehaviour.reloadTime}), Live]</color>", style);
+            var obj = (LiveEditorBehaviour)target;
+            float time = obj.editorAwake;
+            GUILayout.Label($"<color=yellow>[InEditor({(int)time}), Live]</color>", style);
             base.OnInspectorGUI();
         }
     }
