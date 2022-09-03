@@ -14,7 +14,7 @@ public class PngToMap : LiveEditorBehaviour
     protected override UpdateImportance EditorLiveAwake()
     {
         map = new TransformPool(ground.prefab, parentItem);
-        update = tex != texture;
+        update = tex != texture || map.root.childCount != tex.width * tex.height;
         return update ? UpdateImportance.High : UpdateImportance.None;
     }
 

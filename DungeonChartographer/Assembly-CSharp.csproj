@@ -126,6 +126,7 @@
     <Compile Include="Assets\Scripts\External\Interact\Combat\Pathfinding.cs" />
     <Compile Include="Assets\Scripts\Map\UIReadProp.cs" />
     <Compile Include="Assets\Scripts\External\Interact\Combat\Map.cs" />
+    <Compile Include="Assets\Scripts\Map\SpriteObj.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

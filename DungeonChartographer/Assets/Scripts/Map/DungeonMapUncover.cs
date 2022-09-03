@@ -8,7 +8,7 @@ public class CombatLoad
     public string combatArgs;
 }
 
-public class DungeonMapUncover : LiveBehaviour, IGridItem
+public class DungeonMapUncover : LiveBehaviour
 {
     [System.Flags]
     public enum WallDirections
@@ -26,7 +26,6 @@ public class DungeonMapUncover : LiveBehaviour, IGridItem
     public WallDirections explored;
 
     public CombatLoad combatArgs;
-    public Color color;
 
     protected override void LiveAwake()
     {
@@ -50,12 +49,5 @@ public class DungeonMapUncover : LiveBehaviour, IGridItem
             bool show = (explored & (WallDirections)(1 << i)) != 0;
             waterLURD.GetChild(i).gameObject.SetActive(show);
         }
-    }
-
-    public void Init(object pixel)
-    {
-        Color color = (Color)pixel;
-        this.color = color;
-        Show();
     }
 }
