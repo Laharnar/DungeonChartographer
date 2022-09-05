@@ -13,7 +13,7 @@ namespace Combat
         static RangeMap fullMap => FreshWorldMap();
 
         public static RangeMap FreshWorldMap() {
-            return BattleManager.I.GetMap((slot) => !slot.IsWalkable);
+            return Battle.I.GetMap((slot) => !slot.IsWalkable);
         }
 
         /// <summary>

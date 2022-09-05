@@ -7,15 +7,16 @@ public class PngToMap : LiveEditorBehaviour
     public string optionalTextureResourcesPath;
     public ColorPrefab ground;
     public Transform parentItem;
-    public bool update = true;
+    public bool update = false;
     TransformPool map;
     Texture2D tex;
 
     protected override UpdateImportance EditorLiveAwake()
     {
-        map = new TransformPool(ground.prefab, parentItem);
-        update = tex != texture || map.root.childCount != tex.width * tex.height;
-        return update ? UpdateImportance.High : UpdateImportance.None;
+        if(map == null || ground.prefab != map.Prefab)
+            map = new TransformPool(ground.prefab, parentItem);
+        update = tex == null || map.root.childCount != tex.width * tex.height;
+        return update ? UpdateImportance.High : UpdateImportance.None; 
     }
 
     private void Update()
@@ -44,6 +45,7 @@ public class PngToMap : LiveEditorBehaviour
     {
         map.Depool();
         // Iterate through it's pixels
+        int counter = 0;
         for (int i = 0; i < image.width; i++)
         {
             for (int j = 0; j < image.height; j++)
@@ -57,6 +59,11 @@ public class PngToMap : LiveEditorBehaviour
                 else
                 {
                     var obj = map.Instantiate(transform.position + new Vector3(i, j), new Quaternion(), map.root);
+                    if (pixel != Color.black && pixel.a == 1)
+                    {
+                        obj.GetComponent<DungeonMapUncover>().combatArgs.loadCombat = "" + counter;
+                        counter++;
+                    }
                     obj.GetComponent<IGridItem>()?.Init(pixel);
                 }
             }
@@ -64,9 +71,12 @@ public class PngToMap : LiveEditorBehaviour
     }
 }
 
+[Serializable]
 public class TransformPool
 {
     public Transform root { get; private set; }
+    public Transform Prefab { get => prefab; }
+
     Transform prefab;
     public int SpawnCount;
     Transform parent;

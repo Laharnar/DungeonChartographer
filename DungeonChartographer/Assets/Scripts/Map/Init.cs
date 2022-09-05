@@ -18,9 +18,9 @@ public static class Init
     internal static T AutoSingleton<T>(ref T i) where T: MonoBehaviour
     {
         if (i == null)
-        {
+            i = GameObject.FindObjectOfType<T>();
+        if(i == null)
             return i = new GameObject($"Singleton::{typeof(T).Name}").AddComponent<T>();
-        }
         return i;
     }
 

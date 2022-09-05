@@ -13,7 +13,7 @@ namespace Combat
 
         public static RangeMap Flood(Vector2Int start, int distance, bool startOnlyIfFree, bool removeFilledStart)
         {
-            if (!startOnlyIfFree && !BattleManager.I.GetSlot(start).IsWalkable) { return RangeMap.Empty; }
+            if (!startOnlyIfFree && !Battle.I.GetSlot(start).IsWalkable) { return RangeMap.Empty; }
 
             distance = Mathf.Max(distance, 0); // negative value into hashset throws exception
 
@@ -24,7 +24,7 @@ namespace Combat
             HashSet<Vector2Int> newLastAdded = new HashSet<Vector2Int>();
 
             Flood(distance, floodMap, lastAdded, newLastAdded);
-            if (removeFilledStart && BattleManager.I.GetSlot(start).unit != null)
+            if (removeFilledStart && Battle.I.GetSlot(start).unit != null)
                 floodMap.Remove(start);
             return floodMap;
         }
@@ -40,22 +40,22 @@ namespace Combat
             foreach (var slot in lastAdded)
             {
                 Vector2Int temp = slot + new Vector2Int(1, 0);
-                if (BattleManager.I.GetSlot(temp).IsWalkable && map.Add(temp))
+                if (Battle.I.GetSlot(temp).IsWalkable && map.Add(temp))
                 {
                     newLastAdded.Add(temp);
                 }
                 temp = slot + new Vector2Int(-1, 0);
-                if (BattleManager.I.GetSlot(temp).IsWalkable && map.Add(temp))
+                if (Battle.I.GetSlot(temp).IsWalkable && map.Add(temp))
                 {
                     newLastAdded.Add(temp);
                 }
                 temp = slot + new Vector2Int(0, 1);
-                if (BattleManager.I.GetSlot(temp).IsWalkable && map.Add(temp))
+                if (Battle.I.GetSlot(temp).IsWalkable && map.Add(temp))
                 {
                     newLastAdded.Add(temp);
                 }
                 temp = slot + new Vector2Int(0, -1);
-                if (BattleManager.I.GetSlot(temp).IsWalkable && map.Add(temp))
+                if (Battle.I.GetSlot(temp).IsWalkable && map.Add(temp))
                 {
                     newLastAdded.Add(temp);
                 }
@@ -76,7 +76,7 @@ namespace Combat
                 Vector2Int itemInt = slots.Dequeue();
                 if (!filled.Contains(itemInt))
                 {
-                    if (BattleManager.I.GetSlot(itemInt).IsWalkable)
+                    if (Battle.I.GetSlot(itemInt).IsWalkable)
                     {
                         filled.Add(itemInt);
                         Vector3 item = (Vector2)itemInt;
@@ -125,7 +125,7 @@ namespace Combat
         {
             Vector2Int[] targets;
             // search for paths to 4 slots around endG
-            if (BattleManager.I.GetSlot(endG).unit != null)
+            if (Battle.I.GetSlot(endG).unit != null)
             {
                 targets = new Vector2Int[4]
                 {

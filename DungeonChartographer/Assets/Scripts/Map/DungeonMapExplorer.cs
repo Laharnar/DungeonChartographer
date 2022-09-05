@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 [RequireComponent(typeof(CircleCollider2D))]
 public class DungeonMapExplorer : MonoBehaviour
@@ -6,9 +7,12 @@ public class DungeonMapExplorer : MonoBehaviour
     Vector2 lastMoveDir; // for dir.
     public float delay = 0.75f;
     float lastTime = -1;
+    bool cinematics = false;
+    DungeonMapUncover last;
 
     private void Update()
     {
+        if (cinematics) return;
         var input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         if (Time.time > lastTime + delay || lastMoveDir != input)
         {
@@ -40,6 +44,17 @@ public class DungeonMapExplorer : MonoBehaviour
             uncover.explored |= DungeonMapUncover.WallDirections.Up;
         }
         uncover.Show();
+        if(uncover.combatArgs.loadCombat != "")
+            StartCoroutine(SlowLoad(uncover, last));
+        last = uncover;
+    }
+
+    IEnumerator SlowLoad(DungeonMapUncover uncover, DungeonMapUncover last)
+    {
+        cinematics = true;
+        yield return new WaitForSeconds(1.25f);
+        Battle.I.Load(uncover.combatArgs.loadCombat, last, this);
+        cinematics = false;
     }
 
     private void OnTriggerExit2D(Collider2D collision)

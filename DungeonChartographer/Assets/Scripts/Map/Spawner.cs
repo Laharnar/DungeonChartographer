@@ -12,6 +12,8 @@ public class Spawner : MonoBehaviour
 
     private void Awake()
     {
+        if (spawnParent == null && transform.parent != null)
+            spawnParent = transform.parent;
         this.GetTransformIfNull(ref spawnParent);
         if (!spawnOnStart)
             lastPos = transform.position;
@@ -23,6 +25,7 @@ public class Spawner : MonoBehaviour
         {
             lastPos = transform.position;
             Instantiate(spawnObject, transform.position, new Quaternion(), spawnParent);
+
         }
     }
 }

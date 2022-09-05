@@ -6,7 +6,7 @@ public class OnPickCombat : MonoBehaviour, IPlayerPicker
 {
     [SerializeField] string pickMode = "free";
 
-    ISlotPicker slotPicker => BattleManager.I;
+    ISlotPicker slotPicker => Battle.I;
 
     public SlotInfo SelectedSlot { get => selectedSlot; }
 

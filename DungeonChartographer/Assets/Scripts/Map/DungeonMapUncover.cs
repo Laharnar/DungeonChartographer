@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CombatLoad
+[System.Serializable]
+public class CombatLoad // this should be treated as link instead of direct string, cuz map gets reloaded.
 {
     public string loadCombat;
     public string combatArgs;

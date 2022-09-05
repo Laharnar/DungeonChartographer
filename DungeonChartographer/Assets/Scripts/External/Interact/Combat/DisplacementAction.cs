@@ -106,7 +106,7 @@ namespace Combat
             {
                 var slot = positions[i];
                 //if (Filters.ObstacleFilter(slot) && 
-                if (!BattleManager.I.GetSlot(slot).unit)
+                if (!Battle.I.GetSlot(slot).unit)
                 {
                     stopAt = i - 1;
                     break;

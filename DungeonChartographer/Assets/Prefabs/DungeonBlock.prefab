@@ -215,9 +215,7 @@ GameObject:
   - component: {fileID: 8169231309909295493}
   - component: {fileID: 1614263793}
   - component: {fileID: 7233906745830619343}
-  - component: {fileID: 939524862}
   - component: {fileID: 939524866}
-  - component: {fileID: 1763550398}
   m_Layer: 0
   m_Name: DungeonBlock
   m_TagString: Untagged
@@ -331,22 +329,9 @@ MonoBehaviour:
   uncovered: 0
   walls: 0
   explored: 0
---- !u!58 &939524862
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8169231309909295515}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.23
+  combatArgs:
+    loadCombat: 
+    combatArgs: 
 --- !u!114 &939524866
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -361,22 +346,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   obj: {fileID: 8169231309909295493}
   color: {r: 1, g: 1, b: 1, a: 1}
---- !u!58 &1763550398
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8169231309909295515}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.23
 --- !u!1 &8169231310483534261
 GameObject:
   m_ObjectHideFlags: 0
